@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>de.ls5.wt2</groupId>
-    <artifactId>example06-parent</artifactId>
+    <artifactId>quack-project-parent</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -26,13 +26,13 @@
         <exec.version>3.0.0</exec.version>
         <shiro.version>1.11.0</shiro.version>
 
-        <h2.path>${env.HOME}/example06</h2.path>
+        <h2.path>${env.HOME}/quack-project</h2.path>
     </properties>
 
     <modules>
-        <module>example06-persistence</module>
-        <module>example06-business</module>
-        <module>example06-presentation</module>
+        <module>quack-project-persistence</module>
+        <module>quack-project-persistence</module>
+        <module>quack-project-presentation</module>
     </modules>
 
 </project>

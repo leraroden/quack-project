@@ -6,17 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="example06-persistence" />
-        <module name="example06-business" />
-        <module name="example06-presentation" />
+        <module name="quack-project-persistence" />
+        <module name="quack-project-presentation" />
+        <module name="quack-project-business" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="quack-project" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="example06-business" options="-parameters" />
-      <module name="example06-persistence" options="-parameters" />
-      <module name="example06-presentation" options="-parameters" />
+      <module name="quack-project-business" options="-parameters" />
+      <module name="quack-project-persistence" options="-parameters" />
+      <module name="quack-project-presentation" options="-parameters" />
     </option>
   </component>
 </project>
