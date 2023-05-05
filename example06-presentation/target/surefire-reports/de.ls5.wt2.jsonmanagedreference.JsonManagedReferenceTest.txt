@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: de.ls5.wt2.jsonmanagedreference.JsonManagedReferenceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in de.ls5.wt2.jsonmanagedreference.JsonManagedReferenceTest

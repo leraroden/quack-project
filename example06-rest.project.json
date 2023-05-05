@@ -1,0 +1,2341 @@
+{
+  "version": "3.0.0",
+  "type": "project",
+  "project": {
+    "name": "Example06 REST",
+    "environments": [
+      {
+        "name": "Production",
+        "urls": [
+          {
+            "name": "Base",
+            "url": "http://localhost:8080",
+            "default": true
+          }
+        ],
+        "variables": [],
+        "default": true
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "Default group",
+      "symbols": [],
+      "groups": []
+    },
+    {
+      "name": "jwt",
+      "symbols": [
+        {
+          "id": 0,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "jwt - reset",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "token",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/reset",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariable",
+                "name": "token",
+                "value": ""
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.867+00:00"
+        },
+        {
+          "id": 1,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "content",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "headline",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "token",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "jwt - create news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "POST",
+                "url": "/rest/auth/jwt/news",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {
+                  "Authorization": "Bearer {{$token}}"
+                },
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": "{\"headline\":\"{{$headline}}\", \"content\": \"{{$content}}\"}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.875+00:00"
+        },
+        {
+          "id": 2,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "password",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "username",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "jwt - auth",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "token",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "POST",
+                "url": "/rest/auth/jwt/authenticate",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": "{\"username\":\"{{$username}}\", \"password\": \"{{$password}}\"}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByHttpResponse",
+                "name": "token"
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.881+00:00"
+        },
+        {
+          "id": 3,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "token",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "jwt - latest news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/auth/jwt/news/newest",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {
+                  "Authorization": "Bearer {{$token}}"
+                },
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByJSON",
+                "name": "headline",
+                "value": "headline"
+              }
+            }
+          ],
+          "successOutput": "{{$headline}}",
+          "updatedOn": "2021-05-10T06:16:21.888+00:00"
+        },
+        {
+          "id": 4,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "token",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "jwt - all news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/auth/jwt/news",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {
+                  "Authorization": "Bearer {{$token}}"
+                },
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByJSON",
+                "name": "size",
+                "value": "$.size()"
+              }
+            }
+          ],
+          "successOutput": "{{$size}}",
+          "updatedOn": "2021-05-10T06:16:21.895+00:00"
+        },
+        {
+          "id": 5,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "jwt - logout",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "token",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariable",
+                "name": "token",
+                "value": ""
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.901+00:00"
+        }
+      ],
+      "groups": []
+    },
+    {
+      "name": "session",
+      "symbols": [
+        {
+          "id": 6,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "cookie",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "session - all news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/auth/session/news",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {
+                  "JSESSIONID": "{{$cookie}}"
+                },
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByJSON",
+                "name": "size",
+                "value": "$.size()"
+              }
+            }
+          ],
+          "successOutput": "{{$size}}",
+          "updatedOn": "2021-05-10T06:16:21.944+00:00"
+        },
+        {
+          "id": 7,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "session - reset",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "cookie",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/reset",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariable",
+                "name": "cookie",
+                "value": ""
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.950+00:00"
+        },
+        {
+          "id": 8,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "session - logout",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "cookie",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariable",
+                "name": "cookie",
+                "value": ""
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.914+00:00"
+        },
+        {
+          "id": 9,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "cookie",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "session - latest news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/auth/session/news/newest",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {
+                  "JSESSIONID": "{{$cookie}}"
+                },
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByJSON",
+                "name": "headline",
+                "value": "headline"
+              }
+            }
+          ],
+          "successOutput": "{{$headline}}",
+          "updatedOn": "2021-05-10T06:35:31.917+00:00"
+        },
+        {
+          "id": 10,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "content",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "cookie",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "headline",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "session - create news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "POST",
+                "url": "/rest/auth/session/news",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {
+                  "JSESSIONID": "{{$cookie}}"
+                },
+                "data": "{\"headline\":\"{{$headline}}\", \"content\": \"{{$content}}\"}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.927+00:00"
+        },
+        {
+          "id": 11,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "password",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "username",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "session - auth",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "cookie",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "POST",
+                "url": "/login.jsp",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                },
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": "username={{$username}}&password={{$password}}\n"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByCookie",
+                "name": "cookie",
+                "value": "JSESSIONID",
+                "cookieType": "REST"
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.935+00:00"
+        }
+      ],
+      "groups": []
+    },
+    {
+      "name": "basic",
+      "symbols": [
+        {
+          "id": 12,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "basic - logout",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "base64key",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariable",
+                "name": "base64key",
+                "value": ""
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.961+00:00"
+        },
+        {
+          "id": 13,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "base64key",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "basic - latest news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/auth/basic/news/newest",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {
+                  "Authorization": "Basic {{$base64key}}"
+                },
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByJSON",
+                "name": "headline",
+                "value": "headline"
+              }
+            }
+          ],
+          "successOutput": "{{$headline}}",
+          "updatedOn": "2021-05-10T06:16:21.968+00:00"
+        },
+        {
+          "id": 14,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "base64key",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "content",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "headline",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "basic - create news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "POST",
+                "url": "/rest/auth/session/news",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {
+                  "Authorization": "Basic {{$base64key}}"
+                },
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": "{\"headline\":\"{{$headline}}\", \"content\": \"{{$content}}\"}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.973+00:00"
+        },
+        {
+          "id": 15,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "password",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "username",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "basic - auth",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "base64key",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_executeScript",
+                "script": "var username = arguments[0].variables.username;\nvar password = arguments[0].variables.password;\nreturn btoa(username + \":\" + password);\n",
+                "async": false,
+                "timeout": 10,
+                "name": "base64key"
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.979+00:00"
+        },
+        {
+          "id": 16,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "base64key",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "basic - all news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/auth/basic/news",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {
+                  "Authorization": "Basic {{$base64key}}"
+                },
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByJSON",
+                "name": "size",
+                "value": "$.size()"
+              }
+            }
+          ],
+          "successOutput": "{{$size}}",
+          "updatedOn": "2021-05-10T06:33:48.678+00:00"
+        },
+        {
+          "id": 17,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "basic - reset",
+          "outputs": [
+            {
+              "type": "output",
+              "name": "base64key",
+              "parameterType": "STRING"
+            }
+          ],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_goto",
+                "url": "/",
+                "baseUrl": "Base",
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                }
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/reset",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariable",
+                "name": "base64key",
+                "value": ""
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T06:16:21.988+00:00"
+        }
+      ],
+      "groups": []
+    }
+  ],
+  "tests": [
+    {
+      "id": 28,
+      "name": "basic - fail to create news as user",
+      "preSteps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [],
+            "symbol": {
+              "id": 17
+            }
+          }
+        }
+      ],
+      "steps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "password",
+                  "parameterType": "STRING"
+                },
+                "value": "markus"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "username",
+                  "parameterType": "STRING"
+                },
+                "value": "markus"
+              }
+            ],
+            "symbol": {
+              "id": 15
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": false,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "base64key",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$base64key}}"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "content",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "headline",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              }
+            ],
+            "symbol": {
+              "id": 14
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "0",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "base64key",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$base64key}}"
+              }
+            ],
+            "symbol": {
+              "id": 16
+            }
+          }
+        }
+      ],
+      "postSteps": [],
+      "generated": false,
+      "status": "DONE",
+      "updatedOn": "2021-05-10T06:30:45.568+00:00",
+      "type": "case"
+    },
+    {
+      "id": 30,
+      "name": "session - fail to create news as user",
+      "preSteps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [],
+            "symbol": {
+              "id": 7
+            }
+          }
+        }
+      ],
+      "steps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "password",
+                  "parameterType": "STRING"
+                },
+                "value": "markus"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "username",
+                  "parameterType": "STRING"
+                },
+                "value": "markus"
+              }
+            ],
+            "symbol": {
+              "id": 11
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": false,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "content",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "cookie",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$cookie}}"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "headline",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              }
+            ],
+            "symbol": {
+              "id": 10
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "0",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "cookie",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$cookie}}"
+              }
+            ],
+            "symbol": {
+              "id": 6
+            }
+          }
+        }
+      ],
+      "postSteps": [],
+      "generated": false,
+      "status": "DONE",
+      "updatedOn": "2021-05-10T06:31:58.949+00:00",
+      "type": "case"
+    },
+    {
+      "id": 27,
+      "name": "basic - create news as admin",
+      "preSteps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [],
+            "symbol": {
+              "id": 17
+            }
+          }
+        }
+      ],
+      "steps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "password",
+                  "parameterType": "STRING"
+                },
+                "value": "admin"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "username",
+                  "parameterType": "STRING"
+                },
+                "value": "admin"
+              }
+            ],
+            "symbol": {
+              "id": 15
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "base64key",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$base64key}}"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "content",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "headline",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              }
+            ],
+            "symbol": {
+              "id": 14
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "test",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "base64key",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$base64key}}"
+              }
+            ],
+            "symbol": {
+              "id": 13
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "1",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "base64key",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$base64key}}"
+              }
+            ],
+            "symbol": {
+              "id": 16
+            }
+          }
+        }
+      ],
+      "postSteps": [],
+      "generated": false,
+      "status": "DONE",
+      "updatedOn": "2021-05-10T06:33:15.548+00:00",
+      "type": "case"
+    },
+    {
+      "id": 29,
+      "name": "session - create news as admin",
+      "preSteps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [],
+            "symbol": {
+              "id": 7
+            }
+          }
+        }
+      ],
+      "steps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "password",
+                  "parameterType": "STRING"
+                },
+                "value": "admin"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "username",
+                  "parameterType": "STRING"
+                },
+                "value": "admin"
+              }
+            ],
+            "symbol": {
+              "id": 11
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "content",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "cookie",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$cookie}}"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "headline",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              }
+            ],
+            "symbol": {
+              "id": 10
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "test",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "cookie",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$cookie}}"
+              }
+            ],
+            "symbol": {
+              "id": 9
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "1",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "cookie",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$cookie}}"
+              }
+            ],
+            "symbol": {
+              "id": 6
+            }
+          }
+        }
+      ],
+      "postSteps": [],
+      "generated": false,
+      "status": "DONE",
+      "updatedOn": "2021-05-10T06:35:35.486+00:00",
+      "type": "case"
+    },
+    {
+      "id": 25,
+      "name": "jwt - create news as admin",
+      "preSteps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [],
+            "symbol": {
+              "id": 0
+            }
+          }
+        }
+      ],
+      "steps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "password",
+                  "parameterType": "STRING"
+                },
+                "value": "admin"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "username",
+                  "parameterType": "STRING"
+                },
+                "value": "admin"
+              }
+            ],
+            "symbol": {
+              "id": 2
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "content",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "headline",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "token",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$token}}"
+              }
+            ],
+            "symbol": {
+              "id": 1
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "test",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "token",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$token}}"
+              }
+            ],
+            "symbol": {
+              "id": 3
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "1",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "token",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$token}}"
+              }
+            ],
+            "symbol": {
+              "id": 4
+            }
+          }
+        }
+      ],
+      "postSteps": [],
+      "generated": false,
+      "status": "DONE",
+      "updatedOn": "2021-05-10T06:28:25.779+00:00",
+      "type": "case"
+    },
+    {
+      "id": 26,
+      "name": "jwt - fail to create news as user",
+      "preSteps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [],
+            "symbol": {
+              "id": 0
+            }
+          }
+        }
+      ],
+      "steps": [
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "password",
+                  "parameterType": "STRING"
+                },
+                "value": "markus"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "username",
+                  "parameterType": "STRING"
+                },
+                "value": "markus"
+              }
+            ],
+            "symbol": {
+              "id": 2
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": false,
+          "expectedOutputMessage": "",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "content",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "headline",
+                  "parameterType": "STRING"
+                },
+                "value": "test"
+              },
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "token",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$token}}"
+              }
+            ],
+            "symbol": {
+              "id": 1
+            }
+          }
+        },
+        {
+          "disabled": false,
+          "expectedResult": "",
+          "expectedOutputSuccess": true,
+          "expectedOutputMessage": "0",
+          "pSymbol": {
+            "parameterValues": [
+              {
+                "parameter": {
+                  "type": "input",
+                  "name": "token",
+                  "parameterType": "STRING"
+                },
+                "value": "{{$token}}"
+              }
+            ],
+            "symbol": {
+              "id": 4
+            }
+          }
+        }
+      ],
+      "postSteps": [],
+      "generated": false,
+      "status": "DONE",
+      "updatedOn": "2021-05-10T06:29:00.438+00:00",
+      "type": "case"
+    }
+  ],
+  "formulaSuites": [],
+  "learnerSetups": [
+    {
+      "name": "learn session",
+      "enableCache": true,
+      "saved": true,
+      "algorithm": {
+        "name": "TTT"
+      },
+      "environments": [
+        {
+          "name": "Production",
+          "urls": [
+            {
+              "name": "Base",
+              "url": "http://localhost:8080",
+              "default": true
+            }
+          ],
+          "variables": [],
+          "default": true
+        }
+      ],
+      "symbols": [
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 8
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "cookie",
+                "parameterType": "STRING"
+              },
+              "value": "{{$cookie}}"
+            }
+          ],
+          "symbol": {
+            "id": 9
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "content",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "cookie",
+                "parameterType": "STRING"
+              },
+              "value": "{{$cookie}}"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "headline",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            }
+          ],
+          "symbol": {
+            "id": 10
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            }
+          ],
+          "symbol": {
+            "id": 11
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            }
+          ],
+          "symbol": {
+            "id": 11
+          }
+        }
+      ],
+      "preSymbol": {
+        "parameterValues": [],
+        "symbol": {
+          "id": 7
+        }
+      },
+      "postSymbol": null,
+      "equivalenceOracle": {
+        "type": "random_word",
+        "batchSize": 1,
+        "minLength": 20,
+        "maxLength": 20,
+        "seed": 42,
+        "maxNoOfTests": 20
+      },
+      "webDriver": {
+        "width": 1920,
+        "height": 1080,
+        "implicitlyWait": 0,
+        "pageLoadTimeout": 10,
+        "scriptTimeout": 10,
+        "platform": "ANY",
+        "browser": "chrome",
+        "version": "",
+        "headless": true
+      },
+      "modelCheckingConfig": {
+        "formulaSuites": [],
+        "minUnfolds": 1,
+        "multiplier": 0.1
+      }
+    },
+    {
+      "name": "learn jwt",
+      "enableCache": true,
+      "saved": true,
+      "algorithm": {
+        "name": "TTT"
+      },
+      "environments": [
+        {
+          "name": "Production",
+          "urls": [
+            {
+              "name": "Base",
+              "url": "http://localhost:8080",
+              "default": true
+            }
+          ],
+          "variables": [],
+          "default": true
+        }
+      ],
+      "symbols": [
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "content",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "headline",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "token",
+                "parameterType": "STRING"
+              },
+              "value": "{{$token}}"
+            }
+          ],
+          "symbol": {
+            "id": 1
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            }
+          ],
+          "symbol": {
+            "id": 2
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 5
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            }
+          ],
+          "symbol": {
+            "id": 2
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "token",
+                "parameterType": "STRING"
+              },
+              "value": "{{$token}}"
+            }
+          ],
+          "symbol": {
+            "id": 3
+          }
+        }
+      ],
+      "preSymbol": {
+        "parameterValues": [],
+        "symbol": {
+          "id": 0
+        }
+      },
+      "postSymbol": null,
+      "equivalenceOracle": {
+        "type": "random_word",
+        "batchSize": 1,
+        "minLength": 20,
+        "maxLength": 20,
+        "seed": 42,
+        "maxNoOfTests": 20
+      },
+      "webDriver": {
+        "width": 1920,
+        "height": 1080,
+        "implicitlyWait": 0,
+        "pageLoadTimeout": 10,
+        "scriptTimeout": 10,
+        "platform": "ANY",
+        "browser": "chrome",
+        "version": "",
+        "headless": true
+      },
+      "modelCheckingConfig": {
+        "formulaSuites": [],
+        "minUnfolds": 1,
+        "multiplier": 0.1
+      }
+    },
+    {
+      "name": "learn basic",
+      "enableCache": true,
+      "saved": true,
+      "algorithm": {
+        "name": "TTT"
+      },
+      "environments": [
+        {
+          "name": "Production",
+          "urls": [
+            {
+              "name": "Base",
+              "url": "http://localhost:8080",
+              "default": true
+            }
+          ],
+          "variables": [],
+          "default": true
+        }
+      ],
+      "symbols": [
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 12
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "base64key",
+                "parameterType": "STRING"
+              },
+              "value": "{{$base64key}}"
+            }
+          ],
+          "symbol": {
+            "id": 13
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "base64key",
+                "parameterType": "STRING"
+              },
+              "value": "{{$base64key}}"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "content",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "headline",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            }
+          ],
+          "symbol": {
+            "id": 14
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            }
+          ],
+          "symbol": {
+            "id": 15
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            }
+          ],
+          "symbol": {
+            "id": 15
+          }
+        }
+      ],
+      "preSymbol": {
+        "parameterValues": [],
+        "symbol": {
+          "id": 17
+        }
+      },
+      "postSymbol": null,
+      "equivalenceOracle": {
+        "type": "random_word",
+        "batchSize": 1,
+        "minLength": 20,
+        "maxLength": 20,
+        "seed": 42,
+        "maxNoOfTests": 20
+      },
+      "webDriver": {
+        "width": 1920,
+        "height": 1080,
+        "implicitlyWait": 0,
+        "pageLoadTimeout": 10,
+        "scriptTimeout": 10,
+        "platform": "ANY",
+        "browser": "chrome",
+        "version": "",
+        "headless": true
+      },
+      "modelCheckingConfig": {
+        "formulaSuites": [],
+        "minUnfolds": 1,
+        "multiplier": 0.1
+      }
+    }
+  ],
+  "testExecutionConfigs": [
+    {
+      "name": "",
+      "driverConfig": {
+        "width": 1920,
+        "height": 1080,
+        "implicitlyWait": 0,
+        "pageLoadTimeout": 10,
+        "scriptTimeout": 10,
+        "platform": "ANY",
+        "browser": "chrome",
+        "version": "",
+        "headless": true
+      },
+      "environment": {
+        "name": "Production"
+      },
+      "description": "",
+      "default": true,
+      "tests": [
+        25,
+        26
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<div class="container mt-4">
+
+  <!-- header -->
+  <div class="p-3 mb-4 bg-light rounded-3">
+    <div class="container-fluid">
+      <h3 class="d-flex">
+        <span class="flex-grow-1">Webtech 2 Examples</span>
+      </h3>
+      <p class="mb-0">Examples for the contents of the lecture.</p>
+    </div>
+  </div>
+
+  <!-- navigation tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/angular" routerLinkActive="active">Angular</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/auth" routerLinkActive="active">Auth</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/security" routerLinkActive="active">Security</a>
+    </li>
+  </ul>
+
+  <!-- news area -->
+  <div class="mt-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>

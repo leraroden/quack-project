@@ -1,0 +1,1697 @@
+{
+  "version": "3.0.0",
+  "type": "project",
+  "project": {
+    "name": "Example06 Web",
+    "environments": [
+      {
+        "name": "Production",
+        "urls": [
+          {
+            "name": "Base",
+            "url": "http://localhost:8080",
+            "default": true
+          }
+        ],
+        "variables": [],
+        "default": true
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "Default group",
+      "symbols": [
+        {
+          "id": 0,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "content",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "headline",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "create news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": true,
+              "errorOutput": null,
+              "action": {
+                "type": "web_checkForNode",
+                "node": {
+                  "selector": "//h5[normalize-space(text()) = '{{$headline}}'] | //h6[normalize-space(text()) = '{{$headline}}']",
+                  "type": "XPATH"
+                }
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_fill",
+                "node": {
+                  "selector": "input[name=\"headline\"]",
+                  "type": "CSS"
+                },
+                "value": "{{$headline}}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_fill",
+                "node": {
+                  "selector": "textarea[name=\"content\"]",
+                  "type": "CSS"
+                },
+                "value": "{{$content}}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": "body",
+                  "type": "CSS"
+                },
+                "tagName": "button",
+                "text": "Create News"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_waitForText",
+                "value": "{{$headline}}",
+                "regexp": false,
+                "node": {
+                  "selector": "wt2-news-details h5",
+                  "type": "CSS"
+                },
+                "maxWaitTime": 10
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_checkForText",
+                "value": "{{$content}}",
+                "regexp": false,
+                "node": {
+                  "selector": "wt2-news-details",
+                  "type": "CSS"
+                }
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_checkForText",
+                "value": "{{$headline}}",
+                "regexp": false,
+                "node": {
+                  "selector": "wt2-news-list h6",
+                  "type": "CSS"
+                }
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:36:16.506+00:00"
+        },
+        {
+          "id": 1,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "get latest news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByHTML",
+                "name": "headline",
+                "node": {
+                  "selector": "wt2-news-details h5",
+                  "type": "CSS"
+                }
+              }
+            }
+          ],
+          "successOutput": "{{$headline}}",
+          "updatedOn": "2021-05-10T05:36:23.401+00:00"
+        },
+        {
+          "id": 2,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "get number of news",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "setVariableByNodeCount",
+                "name": "count",
+                "node": {
+                  "selector": "wt2-news-list .list-group-item",
+                  "type": "CSS"
+                }
+              }
+            }
+          ],
+          "successOutput": "{{$count}}",
+          "updatedOn": "2021-05-10T05:36:30.132+00:00"
+        },
+        {
+          "id": 3,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "go to angular",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": ".nav",
+                  "type": "CSS"
+                },
+                "tagName": "a",
+                "text": "Angular"
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:35:35.754+00:00"
+        },
+        {
+          "id": 4,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "go to auth",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": ".nav",
+                  "type": "CSS"
+                },
+                "tagName": "a",
+                "text": "Auth"
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:35:35.767+00:00"
+        },
+        {
+          "id": 5,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "go to security",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": ".nav",
+                  "type": "CSS"
+                },
+                "tagName": "a",
+                "text": "Security"
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:35:35.777+00:00"
+        },
+        {
+          "id": 6,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [
+            {
+              "type": "input",
+              "name": "password",
+              "parameterType": "STRING"
+            },
+            {
+              "type": "input",
+              "name": "username",
+              "parameterType": "STRING"
+            }
+          ],
+          "name": "login",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_fill",
+                "node": {
+                  "selector": "input[name=\"username\"]",
+                  "type": "CSS"
+                },
+                "value": "{{$username}}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_fill",
+                "node": {
+                  "selector": "input[name=\"password\"]",
+                  "type": "CSS"
+                },
+                "value": "{{$password}}"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": "body",
+                  "type": "CSS"
+                },
+                "tagName": "button",
+                "text": "Login"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_waitForText",
+                "value": "Create News",
+                "regexp": false,
+                "node": {
+                  "selector": "body",
+                  "type": "CSS"
+                },
+                "maxWaitTime": 10
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:35:35.787+00:00"
+        },
+        {
+          "id": 7,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "logout",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": "body",
+                  "type": "CSS"
+                },
+                "tagName": "button",
+                "text": "Logout"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_waitForText",
+                "value": "Login",
+                "regexp": false,
+                "node": {
+                  "selector": "body",
+                  "type": "CSS"
+                },
+                "maxWaitTime": 10
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:35:35.802+00:00"
+        },
+        {
+          "id": 8,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "reset",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_call",
+                "method": "GET",
+                "url": "/rest/reset",
+                "baseUrl": "Base",
+                "timeout": 0,
+                "headers": {},
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                },
+                "cookies": {},
+                "data": null
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "rest_checkStatus",
+                "status": 200
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_goto",
+                "url": "/",
+                "baseUrl": "Base",
+                "credentials": {
+                  "name": "",
+                  "password": ""
+                }
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_waitForText",
+                "value": "Webtech 2 Examples",
+                "regexp": false,
+                "node": {
+                  "selector": "body",
+                  "type": "CSS"
+                },
+                "maxWaitTime": 10
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:35:35.811+00:00"
+        },
+        {
+          "id": 9,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "use basic auth",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": "wt2-auth",
+                  "type": "CSS"
+                },
+                "tagName": "a",
+                "text": "Basic"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_waitForText",
+                "value": "Login",
+                "regexp": false,
+                "node": {
+                  "selector": "wt2-auth",
+                  "type": "CSS"
+                },
+                "maxWaitTime": 10
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:38:08.603+00:00"
+        },
+        {
+          "id": 10,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "use jwt auth",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": "wt2-auth",
+                  "type": "CSS"
+                },
+                "tagName": "a",
+                "text": "JWT"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_waitForText",
+                "value": "Login",
+                "regexp": false,
+                "node": {
+                  "selector": "wt2-auth",
+                  "type": "CSS"
+                },
+                "maxWaitTime": 10
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:38:06.997+00:00"
+        },
+        {
+          "id": 11,
+          "description": "",
+          "expectedResult": "",
+          "hidden": false,
+          "inputs": [],
+          "name": "use session auth",
+          "outputs": [],
+          "steps": [
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_clickElementByText",
+                "node": {
+                  "selector": "wt2-auth",
+                  "type": "CSS"
+                },
+                "tagName": "a",
+                "text": "Session"
+              }
+            },
+            {
+              "type": "action",
+              "disabled": false,
+              "ignoreFailure": false,
+              "negated": false,
+              "errorOutput": null,
+              "action": {
+                "type": "web_waitForText",
+                "value": "Login",
+                "regexp": false,
+                "node": {
+                  "selector": "wt2-auth",
+                  "type": "CSS"
+                },
+                "maxWaitTime": 10
+              }
+            }
+          ],
+          "successOutput": null,
+          "updatedOn": "2021-05-10T05:38:21.372+00:00"
+        }
+      ],
+      "groups": []
+    }
+  ],
+  "tests": [
+    {
+      "id": 3,
+      "name": "angular",
+      "tests": [
+        {
+          "type": "case",
+          "id": 4,
+          "name": "create news",
+          "preSteps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 8
+                }
+              }
+            }
+          ],
+          "steps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "content",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "headline",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  }
+                ],
+                "symbol": {
+                  "id": 0
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "1",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 2
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "test",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 1
+                }
+              }
+            }
+          ],
+          "postSteps": [],
+          "generated": false,
+          "status": "DONE",
+          "updatedOn": "2021-05-10T05:47:20.087+00:00"
+        }
+      ],
+      "type": "suite"
+    },
+    {
+      "id": 5,
+      "name": "auth",
+      "tests": [
+        {
+          "type": "case",
+          "id": 8,
+          "name": "basic - create news as admin",
+          "preSteps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 8
+                }
+              }
+            }
+          ],
+          "steps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 4
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 9
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "password",
+                      "parameterType": "STRING"
+                    },
+                    "value": "admin"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "username",
+                      "parameterType": "STRING"
+                    },
+                    "value": "admin"
+                  }
+                ],
+                "symbol": {
+                  "id": 6
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "content",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "headline",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  }
+                ],
+                "symbol": {
+                  "id": 0
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "test",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 1
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "1",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 2
+                }
+              }
+            }
+          ],
+          "postSteps": [],
+          "generated": false,
+          "status": "DONE",
+          "updatedOn": "2021-05-10T05:49:24.311+00:00"
+        },
+        {
+          "type": "case",
+          "id": 9,
+          "name": "jwt - create news as admin",
+          "preSteps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 8
+                }
+              }
+            }
+          ],
+          "steps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 4
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 10
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "password",
+                      "parameterType": "STRING"
+                    },
+                    "value": "admin"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "username",
+                      "parameterType": "STRING"
+                    },
+                    "value": "admin"
+                  }
+                ],
+                "symbol": {
+                  "id": 6
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "content",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "headline",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  }
+                ],
+                "symbol": {
+                  "id": 0
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "test",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 1
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "1",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 2
+                }
+              }
+            }
+          ],
+          "postSteps": [],
+          "generated": false,
+          "status": "DONE",
+          "updatedOn": "2021-05-10T05:50:24.751+00:00"
+        },
+        {
+          "type": "case",
+          "id": 10,
+          "name": "session - create news as admin",
+          "preSteps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 8
+                }
+              }
+            }
+          ],
+          "steps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 4
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 11
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "password",
+                      "parameterType": "STRING"
+                    },
+                    "value": "admin"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "username",
+                      "parameterType": "STRING"
+                    },
+                    "value": "admin"
+                  }
+                ],
+                "symbol": {
+                  "id": 6
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "content",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "headline",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  }
+                ],
+                "symbol": {
+                  "id": 0
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "test",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 1
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "1",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 2
+                }
+              }
+            }
+          ],
+          "postSteps": [],
+          "generated": false,
+          "status": "DONE",
+          "updatedOn": "2021-05-10T05:50:38.186+00:00"
+        },
+        {
+          "type": "case",
+          "id": 11,
+          "name": "basic - fail to create news as user",
+          "preSteps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 8
+                }
+              }
+            }
+          ],
+          "steps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 4
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 9
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "password",
+                      "parameterType": "STRING"
+                    },
+                    "value": "markus"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "username",
+                      "parameterType": "STRING"
+                    },
+                    "value": "markus"
+                  }
+                ],
+                "symbol": {
+                  "id": 6
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": false,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "content",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "headline",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  }
+                ],
+                "symbol": {
+                  "id": 0
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "0",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 2
+                }
+              }
+            }
+          ],
+          "postSteps": [],
+          "generated": false,
+          "status": "DONE",
+          "updatedOn": "2021-05-10T05:52:15.122+00:00"
+        },
+        {
+          "type": "case",
+          "id": 12,
+          "name": "jwt - fail to create news as user",
+          "preSteps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 8
+                }
+              }
+            }
+          ],
+          "steps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 4
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 10
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "password",
+                      "parameterType": "STRING"
+                    },
+                    "value": "markus"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "username",
+                      "parameterType": "STRING"
+                    },
+                    "value": "markus"
+                  }
+                ],
+                "symbol": {
+                  "id": 6
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": false,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "content",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "headline",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  }
+                ],
+                "symbol": {
+                  "id": 0
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "0",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 2
+                }
+              }
+            }
+          ],
+          "postSteps": [],
+          "generated": false,
+          "status": "DONE",
+          "updatedOn": "2021-05-10T05:53:06.832+00:00"
+        },
+        {
+          "type": "case",
+          "id": 13,
+          "name": "session - fail to create news as user",
+          "preSteps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 8
+                }
+              }
+            }
+          ],
+          "steps": [
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 4
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 11
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "password",
+                      "parameterType": "STRING"
+                    },
+                    "value": "markus"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "username",
+                      "parameterType": "STRING"
+                    },
+                    "value": "markus"
+                  }
+                ],
+                "symbol": {
+                  "id": 6
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": false,
+              "expectedOutputMessage": "",
+              "pSymbol": {
+                "parameterValues": [
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "content",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  },
+                  {
+                    "parameter": {
+                      "type": "input",
+                      "name": "headline",
+                      "parameterType": "STRING"
+                    },
+                    "value": "test"
+                  }
+                ],
+                "symbol": {
+                  "id": 0
+                }
+              }
+            },
+            {
+              "disabled": false,
+              "expectedResult": "",
+              "expectedOutputSuccess": true,
+              "expectedOutputMessage": "0",
+              "pSymbol": {
+                "parameterValues": [],
+                "symbol": {
+                  "id": 2
+                }
+              }
+            }
+          ],
+          "postSteps": [],
+          "generated": false,
+          "status": "DONE",
+          "updatedOn": "2021-05-10T05:56:23.889+00:00"
+        }
+      ],
+      "type": "suite"
+    }
+  ],
+  "formulaSuites": [],
+  "learnerSetups": [
+    {
+      "name": "",
+      "enableCache": true,
+      "saved": true,
+      "algorithm": {
+        "name": "TTT"
+      },
+      "environments": [
+        {
+          "name": "Production",
+          "urls": [
+            {
+              "name": "Base",
+              "url": "http://localhost:8080",
+              "default": true
+            }
+          ],
+          "variables": [],
+          "default": true
+        }
+      ],
+      "symbols": [
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "content",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "headline",
+                "parameterType": "STRING"
+              },
+              "value": "test"
+            }
+          ],
+          "symbol": {
+            "id": 0
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 3
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 4
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 5
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "admin"
+            }
+          ],
+          "symbol": {
+            "id": 6
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 7
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 9
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 10
+          }
+        },
+        {
+          "parameterValues": [],
+          "symbol": {
+            "id": 11
+          }
+        },
+        {
+          "parameterValues": [
+            {
+              "parameter": {
+                "type": "input",
+                "name": "password",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            },
+            {
+              "parameter": {
+                "type": "input",
+                "name": "username",
+                "parameterType": "STRING"
+              },
+              "value": "markus"
+            }
+          ],
+          "symbol": {
+            "id": 6
+          }
+        }
+      ],
+      "preSymbol": {
+        "parameterValues": [],
+        "symbol": {
+          "id": 8
+        }
+      },
+      "postSymbol": null,
+      "equivalenceOracle": {
+        "type": "random_word",
+        "batchSize": 1,
+        "minLength": 20,
+        "maxLength": 20,
+        "seed": 42,
+        "maxNoOfTests": 20
+      },
+      "webDriver": {
+        "width": 1920,
+        "height": 1080,
+        "implicitlyWait": 0,
+        "pageLoadTimeout": 10,
+        "scriptTimeout": 10,
+        "platform": "ANY",
+        "browser": "chrome",
+        "version": "",
+        "headless": true
+      },
+      "modelCheckingConfig": {
+        "formulaSuites": [],
+        "minUnfolds": 1,
+        "multiplier": 0.1
+      }
+    }
+  ],
+  "testExecutionConfigs": [
+    {
+      "name": "all tests",
+      "driverConfig": {
+        "width": 1920,
+        "height": 1080,
+        "implicitlyWait": 0,
+        "pageLoadTimeout": 10,
+        "scriptTimeout": 10,
+        "platform": "ANY",
+        "browser": "chrome",
+        "version": "",
+        "headless": true
+      },
+      "environment": {
+        "name": "Production"
+      },
+      "description": "",
+      "default": true,
+      "tests": [
+        4,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    }
+  ]
+}

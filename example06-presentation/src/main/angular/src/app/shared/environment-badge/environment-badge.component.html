@@ -1,0 +1,7 @@
+<span class="badge bg-dark">
+  <span *ngIf="isProduction; else development">Production</span>
+  <ng-template #development>
+    <span>Development</span>
+  </ng-template>
+</span>
+
