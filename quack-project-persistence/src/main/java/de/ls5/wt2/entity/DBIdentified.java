@@ -1,17 +1,15 @@
 package de.ls5.wt2.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public class DBIdentified {
-
-    private long id;
-
     @Id
-    @GeneratedValue
-    public long getId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+
+    public Long getId() {
         return this.id;
     }
 
