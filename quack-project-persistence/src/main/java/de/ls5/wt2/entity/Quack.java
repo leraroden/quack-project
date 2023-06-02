@@ -1,10 +1,6 @@
 package de.ls5.wt2.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -17,8 +13,9 @@ import java.util.Date;
 @Table(name="Quacks")
 public class Quack extends DBIdentified{
 
-    @Column(name = "author")
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 
     @Column(name = "content")
     private String content;
@@ -28,13 +25,13 @@ public class Quack extends DBIdentified{
 
     public Quack() {}
 
-    public Quack(String username, String content){
-        author = username;
+    public Quack(User author, String content){
+        this.author = author;
         this.content = content;
         publishedOn = new Date();
     }
 
-    public String getAuthor(){
+    public User getAuthor(){
         return author;
     }
     public String getContent(){
