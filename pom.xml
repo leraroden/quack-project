@@ -26,12 +26,13 @@
         <exec.version>3.0.0</exec.version>
         <shiro.version>1.11.0</shiro.version>
 
+        <!--suppress UnresolvedMavenProperty -->
         <h2.path>${env.HOME}/quack-project</h2.path>
     </properties>
 
     <modules>
         <module>quack-project-persistence</module>
-        <module>quack-project-persistence</module>
+        <module>quack-project-business</module>
         <module>quack-project-presentation</module>
     </modules>
 
