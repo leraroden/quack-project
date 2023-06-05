@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/quack-project-parent.iml" filepath="$PROJECT_DIR$/quack-project-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quack-project-persistence/quack-project-persistence.iml" filepath="$PROJECT_DIR$/quack-project-persistence/quack-project-persistence.iml" />
       <module fileurl="file://$PROJECT_DIR$/quack-project-presentation/quack-project-presentation.iml" filepath="$PROJECT_DIR$/quack-project-presentation/quack-project-presentation.iml" />
     </modules>
   </component>
