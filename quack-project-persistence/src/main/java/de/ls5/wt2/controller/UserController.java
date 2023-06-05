@@ -12,16 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController()
+@RequestMapping("/users") // um Lesbarkeit zu verbessern
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/getAllUsers")
+    @GetMapping("")
     public ResponseEntity<List<User>> getAllUsers() {
         try{
-            List<User> userList = new ArrayList<>();
-            userRepository.findAll().forEach(userList::add);
+            List<User> userList = new ArrayList<>(userRepository.findAll());
 
             if(userList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -33,9 +33,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getUserById/{id}")
-    public ResponseEntity<User> getUserById (@PathVariable Long id) {
-        Optional<User> userData = userRepository.findById(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById (@PathVariable Long userId) {
+        Optional<User> userData = userRepository.findById(userId);
 
         if (userData.isPresent()) {
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
@@ -43,15 +43,18 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("")
     public ResponseEntity<User> addUser (@RequestBody User user) {
+        if (user.getId() != null || user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         User userObj = userRepository.save(user);
         return new ResponseEntity<>(userObj, HttpStatus.OK);
     }
 
-    @PostMapping("/updateUserById/{id}")
-    public ResponseEntity<User> updateUserById (@PathVariable Long id, @RequestBody User newUserData) {
-        Optional<User> oldUserData = userRepository.findById(id);
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUserById (@PathVariable Long userId, @RequestBody User newUserData) {
+        Optional<User> oldUserData = userRepository.findById(userId);
 
         if(oldUserData.isPresent()) {
             User updatedUserData = oldUserData.get();
@@ -65,9 +68,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/deleteUserById/{id}")
-    public ResponseEntity<HttpStatus> deleteUserById (@PathVariable Long id) {
-        userRepository.deleteById(id);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<HttpStatus> deleteUserById (@PathVariable Long userId) {
+        userRepository.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

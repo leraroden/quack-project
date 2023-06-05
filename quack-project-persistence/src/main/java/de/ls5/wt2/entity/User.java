@@ -1,5 +1,6 @@
 package de.ls5.wt2.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -20,16 +21,21 @@ public class User extends DBIdentified  {
     @Column(name = "password")
     private String password;
 
+    @JsonIgnore
     @OneToMany
     private List<Quack> quackList = new ArrayList<>();
 
-    public User() {}
+    //public User() {}
 
+    /*
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
     }
+    */
+
+    //public User() {}
 
     public String getUsername() {
         return username;

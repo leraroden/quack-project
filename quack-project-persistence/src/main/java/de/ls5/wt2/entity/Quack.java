@@ -5,8 +5,6 @@ import javax.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-
-
 import java.util.Date;
 
 @Entity
@@ -23,6 +21,7 @@ public class Quack extends DBIdentified{
     @Column(name = "publishedOn")
     private Date publishedOn;
 
+    /*
     public Quack() {}
 
     public Quack(User author, String content){
@@ -30,6 +29,8 @@ public class Quack extends DBIdentified{
         this.content = content;
         publishedOn = new Date();
     }
+
+     */
 
     public User getAuthor(){
         return author;
@@ -47,4 +48,8 @@ public class Quack extends DBIdentified{
     public void setContent(String content){
         this.content = content;
     }
+
+    public void setAuthor(User author){this.author = author;}
+
+    public void setPublishedOn(Date date){this.publishedOn = date;}
 }
