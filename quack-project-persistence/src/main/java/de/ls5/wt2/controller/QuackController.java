@@ -76,12 +76,13 @@ public class QuackController {
             if(newQuack.getContent() != null){
                 newQuack.setAuthor(author.get());
                 newQuack.setPublishedOn(new Date());
+                author.get().addQuack(newQuack);
                 Quack quackObj = quackRepository.save(newQuack);
                 return new ResponseEntity<>(quackObj, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("users/{userId}/quacks/{quackId}")
