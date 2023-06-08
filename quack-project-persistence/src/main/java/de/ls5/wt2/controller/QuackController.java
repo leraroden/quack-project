@@ -93,7 +93,6 @@ public class QuackController {
                 Quack updatedQuackData = quackToUpdate.get();
                 updatedQuackData.setContent(newQuackData.getContent());
                 updatedQuackData.setPublishedOn(new Date());
-
                 Quack quackObj = quackRepository.save(updatedQuackData);
                 return new ResponseEntity<>(quackObj, HttpStatus.OK);
             }
