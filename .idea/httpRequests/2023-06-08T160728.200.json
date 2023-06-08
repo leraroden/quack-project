@@ -1,0 +1,46 @@
+[
+  {
+    "id": 5,
+    "author": {
+      "id": 2,
+      "username": "john_doe",
+      "email": "john.doe@example.com",
+      "password": "password123"
+    },
+    "content": "Dies ist ein neuer Quack.",
+    "publishedOn": "2023-06-08T14:01:46.957+00:00"
+  },
+  {
+    "id": 6,
+    "author": {
+      "id": 2,
+      "username": "john_doe",
+      "email": "john.doe@example.com",
+      "password": "password123"
+    },
+    "content": "Dies ist ein neuer Quack.",
+    "publishedOn": "2023-06-08T14:01:48.917+00:00"
+  },
+  {
+    "id": 7,
+    "author": {
+      "id": 2,
+      "username": "john_doe",
+      "email": "john.doe@example.com",
+      "password": "password123"
+    },
+    "content": "Dies ist ein neuer Quack.",
+    "publishedOn": "2023-06-08T14:01:52.043+00:00"
+  },
+  {
+    "id": 8,
+    "author": {
+      "id": 4,
+      "username": "john_doe",
+      "email": "john.doe@example.com",
+      "password": "password123"
+    },
+    "content": "Dies ist ein neuer Quack.",
+    "publishedOn": "2023-06-08T14:01:58.194+00:00"
+  }
+]
