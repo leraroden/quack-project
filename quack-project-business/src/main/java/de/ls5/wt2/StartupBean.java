@@ -43,5 +43,14 @@ public class StartupBean implements ApplicationListener<ContextRefreshedEvent> {
         quack.setPublishedOn(new Date());
 
         this.entityManager.persist(quack);
+
+        // erstellt einen User
+        final User user = new User();
+
+        user.setUsername("user");
+        user.setEmail("user@quackr.com");
+        user.setPassword("user");
+
+        this.entityManager.persist(user);
     }
 }

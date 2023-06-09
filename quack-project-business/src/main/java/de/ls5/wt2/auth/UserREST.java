@@ -26,4 +26,5 @@ public class UserREST {
 
         return ResponseEntity.ok(subject.getPrincipal().toString());
     }
+
 }

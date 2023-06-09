@@ -1,6 +1,5 @@
 package de.ls5.wt2.auth;
 
-import de.ls5.wt2.conf.auth.permission.EditQuackPermission;
 import de.ls5.wt2.entity.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -38,16 +37,19 @@ public class AuthQuacksREST {
     public ResponseEntity<String> create(@RequestBody final Quack param){
 
         final Subject subject = SecurityUtils.getSubject();
-        String content = param.getContent();
-
-        final User user = subject.getPrincipals().oneByType(User.class);
-        final Quack newQuack = new Quack();
-
-        newQuack.setAuthor(user);
-        newQuack.setContent(content);
-        newQuack.setPublishedOn(new Date());
-        entityManager.persist(newQuack);
-        return ResponseEntity.ok("New Quack was added");
+        final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                .setParameter("username", subject.getPrincipals().toString())
+                .getSingleResult();
+        final String content = param.getContent();
+        if(content != null){
+            final Quack newQuack = new Quack();
+            newQuack.setAuthor(author);
+            newQuack.setContent(content);
+            newQuack.setPublishedOn(new Date());
+            entityManager.persist(newQuack);
+            return ResponseEntity.ok("New Quack was added");
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(path = "{quackId}",
@@ -55,17 +57,23 @@ public class AuthQuacksREST {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> update(@PathVariable final long quackId,
                                          @RequestBody final Quack param){
+        final Subject subject = SecurityUtils.getSubject();
         final Quack quack = this.entityManager.find(Quack.class, quackId);
         if (quack != null) {
-            // TODO überprüfen ob der User der Author des Quacks ist
-            //EditQuackPermission editQuackPermission = new EditQuackPermission();
-            //if(SecurityUtils.getSubject().isPermitted(editQuackPermission)){
-                quack.setContent(param.getContent());
-                entityManager.flush();
-                return ResponseEntity.ok("Quack was updated");
-            //}
-            //return ResponseEntity.status(HttpStatus.FORBIDDEN)
-            //        .body("You are not authorized to edit this Quack");
+            final User user= entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", subject.getPrincipals().toString())
+                    .getSingleResult();
+            if(quack.getAuthor().equals(user)){
+                final String content = param.getContent();
+                if(content != null){
+                    quack.setContent(content);
+                    entityManager.flush();
+                    return ResponseEntity.ok("Quack was updated");
+                }
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("You are not authorized to update this Quack");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -74,19 +82,20 @@ public class AuthQuacksREST {
     @DeleteMapping(path = "{quackId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> delete(@PathVariable final long quackId){
+        final Subject subject = SecurityUtils.getSubject();
         final Quack quack = this.entityManager.find(Quack.class, quackId);
         if (quack != null) {
-            // TODO überprüfen ob der User der Author des Quacks ist
-            //EditQuackPermission editQuackPermission = new EditQuackPermission();
-            //if(SecurityUtils.getSubject().isPermitted(editQuackPermission)){
+            final User user= entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", subject.getPrincipals().toString())
+                    .getSingleResult();
+            if(quack.getAuthor().equals(user)){
                 entityManager.remove(quack);
                 return ResponseEntity.ok("Quack was deleted");
-            //}
-            //return ResponseEntity.status(HttpStatus.FORBIDDEN)
-            //        .body("You are not authorized to delete this Quack");
-        } else {
-            return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("You are not authorized to delete this Quack");
         }
+        return ResponseEntity.notFound().build();
     }
 
 
