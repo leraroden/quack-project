@@ -63,7 +63,8 @@ public class AuthQuacksREST {
             final User user= entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                     .setParameter("username", subject.getPrincipals().toString())
                     .getSingleResult();
-            if(quack.getAuthor().equals(user)){
+            // überprüfen ob User der Author des Quacks oder Admin ist
+            if(quack.getAuthor().equals(user) || subject.hasRole("admin")){
                 final String content = param.getContent();
                 if(content != null){
                     quack.setContent(content);
@@ -88,7 +89,8 @@ public class AuthQuacksREST {
             final User user= entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                     .setParameter("username", subject.getPrincipals().toString())
                     .getSingleResult();
-            if(quack.getAuthor().equals(user)){
+            // überprüfen ob User der Author des Quacks oder Admin ist
+            if(quack.getAuthor().equals(user) || subject.hasRole("admin")){
                 entityManager.remove(quack);
                 return ResponseEntity.ok("Quack was deleted");
             }
