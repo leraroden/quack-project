@@ -24,9 +24,12 @@ public class QuacksREST {
     @Autowired
     private EntityManager entityManager;
 
+    /*
+     *    gibt alle Quacks zurück
+     */
     @GetMapping(path = "all",
                 produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Quack>> getAllQuacks(){
+    public ResponseEntity<List<Quack>> readAllQuacks(){
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         final CriteriaQuery<Quack> query = builder.createQuery(Quack.class);
         final Root<Quack> from = query.from(Quack.class);

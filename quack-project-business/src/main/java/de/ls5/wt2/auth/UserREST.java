@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = {"rest/auth/basic/profile"})
 public class UserREST {
 
+    /*
+     *    gibt den Namen des angemeldeten Users zurück
+     */
     @GetMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<?> getProfile() {
 

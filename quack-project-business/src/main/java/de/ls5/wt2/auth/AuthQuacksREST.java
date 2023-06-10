@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.*;
 import java.util.*;
 
 @Transactional
@@ -20,22 +19,12 @@ public class AuthQuacksREST {
     @Autowired
     private EntityManager entityManager;
 
-    // diese Methode ist nicht nötig, da sie in QuacksREST schon vorhanden ist
-    @GetMapping(path = "all",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Quack>> getAllQuacks(){
-
-        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        final CriteriaQuery<Quack> query = builder.createQuery(Quack.class);
-        final Root<Quack> from = query.from(Quack.class);
-        query.select(from);
-        List<Quack> quacks = this.entityManager.createQuery(query).getResultList();
-        return ResponseEntity.ok(quacks);
-    }
-
+    /*
+     *    erzeugt einen neuen Quack, wenn der User angemeldet ist
+     */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> create(@RequestBody final Quack param){
+    public ResponseEntity<String> createQuack(@RequestBody final Quack param){
 
         final Subject subject = SecurityUtils.getSubject();
         final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
@@ -53,13 +42,37 @@ public class AuthQuacksREST {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /*
+     *    gibt einen Quack zurück, wenn der User angemeldet ist und der Author des Quacks oder Admin ist
+     */
+    @GetMapping(path = "{quackId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Quack> readQuackById(@PathVariable final long quackId){
+        final Quack quack = entityManager.find(Quack.class, quackId);
+        if(quack != null){
+            final Subject subject = SecurityUtils.getSubject();
+            final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", subject.getPrincipals().toString())
+                    .getSingleResult();
+            // überprüfen ob User der Author des Quacks oder Admin ist
+            if(quack.getAuthor().equals(author) || subject.hasRole("admin")){
+                return ResponseEntity.ok(quack);
+            }
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    /*
+     *    ändert einen existierenden Quack, wenn der angemeldete User Author des Quacks ist
+     */
     @PutMapping(path = "{quackId}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> update(@PathVariable final long quackId,
+    public ResponseEntity<String> updateQuackById(@PathVariable final long quackId,
                                          @RequestBody final Quack param){
         final Subject subject = SecurityUtils.getSubject();
-        final Quack quack = this.entityManager.find(Quack.class, quackId);
+        final Quack quack = entityManager.find(Quack.class, quackId);
         if (quack != null) {
             final User user= entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                     .setParameter("username", subject.getPrincipals().toString())
@@ -81,9 +94,12 @@ public class AuthQuacksREST {
         }
     }
 
+    /*
+     *    löscht einen existierenden Quack, wenn der angemeldete User Author des Quacks ist
+     */
     @DeleteMapping(path = "{quackId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> delete(@PathVariable final long quackId){
+    public ResponseEntity<String> deleteQuackById(@PathVariable final long quackId){
         final Subject subject = SecurityUtils.getSubject();
         final Quack quack = this.entityManager.find(Quack.class, quackId);
         if (quack != null) {
