@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.Filter;
 
 import de.ls5.wt2.conf.auth.BasicAuthenticationFilterWithoutRedirect;
-import de.ls5.wt2.conf.auth.permission.WT2Realm;
+import de.ls5.wt2.conf.auth.WT2Realm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;

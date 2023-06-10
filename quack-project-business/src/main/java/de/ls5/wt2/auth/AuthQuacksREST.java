@@ -20,6 +20,7 @@ public class AuthQuacksREST {
     @Autowired
     private EntityManager entityManager;
 
+    // diese Methode ist nicht nötig, da sie in QuacksREST schon vorhanden ist
     @GetMapping(path = "all",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Quack>> getAllQuacks(){
