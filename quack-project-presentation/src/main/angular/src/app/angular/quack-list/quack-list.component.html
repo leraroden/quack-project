@@ -1,0 +1,10 @@
+<div *ngIf="quacks; then showQuacks else noQuacks"></div>
+<ng-template #showQuacks>
+  <div class="alert alert-info" *ngFor="let quack of quacks">
+    <p>{{ quack.publishedOn | date}}</p>
+    {{ quack.content }}
+  </div>
+</ng-template>
+<ng-template #noQuacks>
+  <div class="alert alert-info">Keine Quacks vorhanden.</div>
+</ng-template>
