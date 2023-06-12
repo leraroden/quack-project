@@ -3,6 +3,7 @@
   <div class="alert alert-info" *ngFor="let quack of quacks">
     <p>{{ quack.publishedOn | date}}</p>
     {{ quack.content }}
+    <p>{{quack.author_id}}</p>
   </div>
 </ng-template>
 <ng-template #noQuacks>

@@ -8,11 +8,12 @@ import java.util.List;
 
 @Entity
 @Table(name="Users")
-public class User extends DBIdentified  {
+public class User extends DBIdentified {
 
     @Column(name = "username")
     private String username;
 
+    @JsonIgnore
     @Column(name = "email")
     private String email;
 
@@ -26,6 +27,7 @@ public class User extends DBIdentified  {
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -33,6 +35,7 @@ public class User extends DBIdentified  {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -40,16 +43,8 @@ public class User extends DBIdentified  {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
-    }
-    public List<Quack> getQuackList(){
-        return quackList;
-    }
-    public void addQuack(Quack newQuack){
-        quackList.add(newQuack);
-    }
-    public void deleteQuack(Quack quack){
-        quackList.remove(quack);
     }
 }
