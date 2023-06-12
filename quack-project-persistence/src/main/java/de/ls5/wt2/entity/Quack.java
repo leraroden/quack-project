@@ -21,17 +21,6 @@ public class Quack extends DBIdentified{
     @Column(name = "publishedOn")
     private Date publishedOn;
 
-    /*
-    public Quack() {}
-
-    public Quack(User author, String content){
-        this.author = author;
-        this.content = content;
-        publishedOn = new Date();
-    }
-
-     */
-
     public User getAuthor(){
         return author;
     }

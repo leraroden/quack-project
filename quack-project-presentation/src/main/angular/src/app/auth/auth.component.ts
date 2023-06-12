@@ -31,9 +31,6 @@ export class AuthComponent extends AngularComponent implements OnInit {
       next: queryParams => {
         if (queryParams.has(AuthComponent.AUTH_METHOD_PARAM_NAME)) {
           switch (queryParams.get(AuthComponent.AUTH_METHOD_PARAM_NAME)) {
-            case 'jwt':
-              this.useJwtAuth();
-              break;
             case 'session':
               this.useSessionAuth();
               break;
