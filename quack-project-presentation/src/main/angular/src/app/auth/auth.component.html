@@ -10,9 +10,6 @@
         <li class="nav-item">
           <a class="nav-link" href="#" (click)="useSessionAuth($event)" [class.active]="isSessionAuth()">Session</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" (click)="useJwtAuth($event)" [class.active]="isJwtAuth()">JWT</a>
-        </li>
       </ul>
       <hr>
       <wt2-login [authService]="authService" (loggedIn)="load()"></wt2-login>

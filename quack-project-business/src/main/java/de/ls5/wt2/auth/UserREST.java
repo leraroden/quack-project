@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Transactional
 @RestController
-@RequestMapping(path = {"rest/auth/session/profile", "rest/auth/basic/profile", "rest/auth/jwt/profile"})
+@RequestMapping(path = {"rest/auth/basic/profile"})
 public class UserREST {
 
+    /*
+     *    gibt den Namen des angemeldeten Users zurück
+     */
     @GetMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<?> getProfile() {
 
@@ -26,4 +29,5 @@ public class UserREST {
 
         return ResponseEntity.ok(subject.getPrincipal().toString());
     }
+
 }

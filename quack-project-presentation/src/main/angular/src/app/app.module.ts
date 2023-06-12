@@ -16,6 +16,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { CreateNewsAuthComponent } from './auth/create-news-auth/create-news-auth.component';
 import { NewsListComponent } from './angular/news-list/news-list.component';
 import { EnvironmentBadgeComponent } from './shared/environment-badge/environment-badge.component';
+import { QuackListComponent } from './angular/quack-list/quack-list.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { EnvironmentBadgeComponent } from './shared/environment-badge/environmen
     NewsDetailsComponent,
     LoginComponent,
     NewsListComponent,
-    EnvironmentBadgeComponent
+    EnvironmentBadgeComponent,
+    QuackListComponent
   ],
   imports: [
     BrowserModule,

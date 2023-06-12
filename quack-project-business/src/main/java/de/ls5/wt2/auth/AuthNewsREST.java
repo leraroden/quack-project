@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Transactional
 @RestController
-@RequestMapping(path = {"rest/auth/session/news", "rest/auth/basic/news", "rest/auth/jwt/news"})
+@RequestMapping(path = {"rest/auth/session/news", "rest/auth/basic/news"})
 public class AuthNewsREST {
 
     @Autowired

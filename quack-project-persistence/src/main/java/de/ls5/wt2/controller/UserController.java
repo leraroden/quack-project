@@ -1,6 +1,8 @@
 package de.ls5.wt2.controller;
 
+import de.ls5.wt2.entity.Quack;
 import de.ls5.wt2.entity.User;
+import de.ls5.wt2.repository.QuackRepository;
 import de.ls5.wt2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private QuackRepository quackRepository;
 
     @GetMapping("")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -68,9 +73,17 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    /* TODO fix this */
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<HttpStatus> deleteUserById (@PathVariable Long userId) {
-        userRepository.deleteById(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Optional<User> userData = userRepository.findById(userId);
+        if(userData.isPresent()){
+            List<Quack> quackListToDelete = userData.get().getQuackList();
+            quackRepository.deleteAll(quackListToDelete);
+            userRepository.deleteById(userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
