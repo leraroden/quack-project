@@ -1,10 +1,8 @@
 package de.ls5.wt2.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class User extends DBIdentified  {
     private String password;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Quack> quackList = new ArrayList<>();
 
     public String getUsername() {
