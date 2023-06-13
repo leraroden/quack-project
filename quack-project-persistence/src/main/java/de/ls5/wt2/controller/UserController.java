@@ -13,7 +13,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/users")
+    @PostMapping(path = "rest/users")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         if (user.getUsername() == null || user.getPassword() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

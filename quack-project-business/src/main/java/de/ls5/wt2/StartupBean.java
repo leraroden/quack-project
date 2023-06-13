@@ -58,6 +58,7 @@ public class StartupBean implements ApplicationListener<ContextRefreshedEvent> {
         final Quack quack = new Quack();
 
         quack.setAuthor(admin);
+        quack.setAuthorName(admin.getUsername());
         quack.setContent("Willkommen bei Quackr!");
         quack.setPublishedOn(new Date());
 

@@ -6,6 +6,8 @@ export abstract class AuthService {
   constructor(protected http: HttpClient) {
   }
 
+  abstract register(username: string, password: string): Observable<boolean>;
+
   abstract login(username: string, password: string): Observable<boolean>;
 
   abstract logout(): Observable<boolean>;

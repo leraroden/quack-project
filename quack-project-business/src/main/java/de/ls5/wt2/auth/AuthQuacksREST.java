@@ -34,12 +34,31 @@ public class AuthQuacksREST {
         if(content != null){
             final Quack newQuack = new Quack();
             newQuack.setAuthor(author);
+            newQuack.setAuthorName(author.getUsername());
             newQuack.setContent(content);
             newQuack.setPublishedOn(new Date());
             entityManager.persist(newQuack);
             return ResponseEntity.ok("New Quack was added");
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    /*
+     *    gibt alle Quacks des Users zurück, wenn der User angemeldet ist
+     */
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Quack>> readAllUsersQuacks(){
+        final Subject subject = SecurityUtils.getSubject();
+        final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                .setParameter("username", subject.getPrincipals().toString())
+                .getSingleResult();
+        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.author = :author", Quack.class)
+                .setParameter("author", author)
+                .getResultList();
+        if( quacks.isEmpty()){
+            return ResponseEntity.ok(quacks);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /*
@@ -56,6 +75,7 @@ public class AuthQuacksREST {
                     .getSingleResult();
             // überprüfen ob User der Author des Quacks oder Admin ist
             if(quack.getAuthor().equals(author) || subject.hasRole("admin")){
+                quack.setAuthor(null);
                 return ResponseEntity.ok(quack);
             }
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
