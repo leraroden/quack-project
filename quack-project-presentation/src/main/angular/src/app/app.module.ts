@@ -8,27 +8,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularComponent } from './angular/angular.component';
 import { AuthComponent } from './auth/auth.component';
-import { CreateNewsComponent } from './angular/create-news/create-news.component';
-import { NewsDetailsComponent } from './angular/news-details/news-details.component';
 import { LoginComponent } from './auth/login/login.component';
-import { CreateNewsAuthComponent } from './auth/create-news-auth/create-news-auth.component';
-import { NewsListComponent } from './angular/news-list/news-list.component';
 import { EnvironmentBadgeComponent } from './shared/environment-badge/environment-badge.component';
 import { QuackListComponent } from './angular/quack-list/quack-list.component';
+import {CreateQuackAuthComponent} from "./auth/create-quack-auth/create-quack-auth.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         AngularComponent,
         AuthComponent,
-        CreateNewsAuthComponent,
-        NewsDetailsComponent,
+        CreateQuackAuthComponent,
         LoginComponent,
-        NewsListComponent,
         QuackListComponent,
-        EnvironmentBadgeComponent,
-        QuackListComponent,
-        CreateNewsComponent
+        EnvironmentBadgeComponent
     ],
     imports: [
         BrowserModule,

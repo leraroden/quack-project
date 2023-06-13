@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from './news.service';
-import { News } from '../news';
+import {QuackService} from "./quack.service";
+import {Quack} from "../quack";
 
 @Component({
   selector: 'wt2-angular',
   templateUrl: './angular.component.html',
   styleUrls: ['./angular.component.sass'],
-  providers: [NewsService]
+  providers: [QuackService]
 })
 export class AngularComponent implements OnInit {
 
-  public latest: News | null = null;
-  public news: News[] = [];
+  public quacks: Quack[] = [];
 
-  constructor(protected newsService: NewsService) {
+  constructor(protected quackService: QuackService) {
   }
 
   ngOnInit() {
@@ -21,12 +20,8 @@ export class AngularComponent implements OnInit {
   }
 
   load(): void {
-    this.newsService.getNewest().subscribe({
-      next: news => this.latest = news,
-      error: console.error
-    });
-    this.newsService.getAll().subscribe({
-      next: news => this.news = news,
+    this.quackService.getAllQuacks().subscribe({
+      next: quacks => this.quacks = quacks,
       error: console.error
     });
   }

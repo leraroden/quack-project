@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthNewsService } from './auth-news.service';
 import { AngularComponent } from '../angular/angular.component';
 import { BasicAuthService } from './basic-auth.service';
 import { AuthService } from './auth.service';
 import {ActivatedRoute, Router} from "@angular/router";
+import {AuthQuackService} from "./auth-quack.service";
 
 @Component({
   selector: 'wt2-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.sass'],
-  providers: [AuthNewsService]
+  providers: [AuthQuackService]
 })
 export class AuthComponent extends AngularComponent implements OnInit {
 
@@ -19,10 +19,12 @@ export class AuthComponent extends AngularComponent implements OnInit {
   authService: AuthService;
 
   constructor(private http: HttpClient,
-              private authNewsService: AuthNewsService,
+              private authQuackService: AuthQuackService,
               private router: Router,
               private route: ActivatedRoute) {
-    super(authNewsService);
+    super(authQuackService);
+    this.authService = new BasicAuthService(http);
+    this.authQuackService.setAuthService(this.authService);
   }
 
   override ngOnInit() {
@@ -35,14 +37,13 @@ export class AuthComponent extends AngularComponent implements OnInit {
 
   logout() {
     this.authService.logout().subscribe();
-    this.news = [];
-    this.latest = null;
+    this.quacks = [];
   }
 
   useBasicAuth(e?: Event) {
     if (e != null) e.preventDefault();
     this.authService = new BasicAuthService(this.http);
-    this.authNewsService.authService = this.authService;
+    this.authQuackService.setAuthService(this.authService);
     this.reloadQueryParameters('basic');
   }
 

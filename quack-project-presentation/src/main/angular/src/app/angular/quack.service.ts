@@ -10,15 +10,10 @@ import { Quack } from '../quack';
 })
 export class QuackService {
 
-  constructor(private http: HttpClient) { }
+  constructor(protected http: HttpClient) { }
 
   getAllQuacks(): Observable<Quack[]> {
     return this.http.get<Quack[]>(`${environment.apiUrl}/quacks/all`);
-  }
-
-  //TODO: muss implementiert werden
-  create(content: string): Observable<Quack> {
-    return undefined;
   }
 
 }
