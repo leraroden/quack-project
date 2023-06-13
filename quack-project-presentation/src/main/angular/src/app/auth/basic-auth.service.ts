@@ -17,7 +17,7 @@ export class BasicAuthService extends AuthService {
 
   // TODO: vervollständige die Methode
   register(username: string, password: string): Observable<boolean> {
-    return this.http.post(`${env.apiUrl}/users`, {'userName' : username, "password" : password}, {observe: 'response'})
+    return this.http.post(`${env.apiUrl}/users`, {'username' : username, "password" : password}, {observe: 'response'})
       .pipe(map(response => {
         return response.status === 200;
       }));

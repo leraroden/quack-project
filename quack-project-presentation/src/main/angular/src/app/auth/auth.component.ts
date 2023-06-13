@@ -27,12 +27,8 @@ export class AuthComponent extends AngularComponent implements OnInit {
 
   override ngOnInit() {
     this.route.queryParamMap.subscribe({
-      next: queryParams => {
-        if (queryParams.has(AuthComponent.AUTH_METHOD_PARAM_NAME)) {
-          this.useBasicAuth();
-        } else {
-          this.useBasicAuth();
-        }
+      next: () => {
+        this.useBasicAuth();
       }
     });
   }

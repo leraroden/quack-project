@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Quack } from '../quack'
+import { Quack } from '../../quack'
 import { QuackService } from '../quack.service';
 
 @Component({

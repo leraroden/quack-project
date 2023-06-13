@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {environment as env, environment} from '../../environments/environment';
 
-import { Quack } from './quack';
+import { Quack } from '../quack';
 import {News} from "../news";
 import {map} from "rxjs/operators";
 
