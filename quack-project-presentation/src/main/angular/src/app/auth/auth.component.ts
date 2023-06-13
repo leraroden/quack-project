@@ -46,10 +46,6 @@ export class AuthComponent extends AngularComponent implements OnInit {
     this.reloadQueryParameters('basic');
   }
 
-  isBasicAuth(): boolean {
-    return this.authService instanceof BasicAuthService;
-  }
-
   private reloadQueryParameters(method: string): void {
     this.router.navigate(
       [],
