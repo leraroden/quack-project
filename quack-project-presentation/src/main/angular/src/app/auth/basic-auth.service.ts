@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {catchError, Observable, of, throwError} from 'rxjs';
+import {Observable, of,} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';

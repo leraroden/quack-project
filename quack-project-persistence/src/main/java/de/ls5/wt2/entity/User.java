@@ -13,10 +13,6 @@ public class User extends DBIdentified {
     @Column(name = "username")
     private String username;
 
-    @JsonIgnore
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "password")
     private String password;
 
@@ -30,14 +26,6 @@ public class User extends DBIdentified {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {

@@ -46,7 +46,6 @@ public class StartupBean implements ApplicationListener<ContextRefreshedEvent> {
         final User admin = new User();
 
         admin.setUsername("admin");
-        admin.setEmail("admin@quackr.com");
         admin.setPassword("admin");
 
         UsernamePasswordToken token = new UsernamePasswordToken(admin.getUsername(), admin.getPassword());
@@ -68,7 +67,6 @@ public class StartupBean implements ApplicationListener<ContextRefreshedEvent> {
         final User user = new User();
 
         user.setUsername("user");
-        user.setEmail("user@quackr.com");
         user.setPassword("user");
 
         this.entityManager.persist(user);

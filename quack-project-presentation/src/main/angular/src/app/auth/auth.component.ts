@@ -4,7 +4,7 @@ import { AuthNewsService } from './auth-news.service';
 import { AngularComponent } from '../angular/angular.component';
 import { BasicAuthService } from './basic-auth.service';
 import { AuthService } from './auth.service';
-import {ActivatedRoute, Params, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'wt2-auth',
