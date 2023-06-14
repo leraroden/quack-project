@@ -2,6 +2,7 @@ package de.ls5.wt2.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
@@ -22,6 +23,7 @@ public class Quack extends DBIdentified{
     @Column(name = "publishedOn")
     private Date publishedOn;
 
+    @JsonIgnore
     public User getAuthor(){
         return author;
     }

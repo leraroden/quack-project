@@ -24,7 +24,7 @@ public class AuthQuacksREST {
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createQuack(@RequestBody final Quack param){
+    public ResponseEntity<Quack> createQuack(@RequestBody final Quack param){
 
         final Subject subject = SecurityUtils.getSubject();
         final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
@@ -38,7 +38,7 @@ public class AuthQuacksREST {
             newQuack.setContent(content);
             newQuack.setPublishedOn(new Date());
             entityManager.persist(newQuack);
-            return ResponseEntity.ok("New Quack was added");
+            return ResponseEntity.ok(newQuack);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

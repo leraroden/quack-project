@@ -35,9 +35,6 @@ public class QuacksREST {
         final Root<Quack> from = query.from(Quack.class);
         query.select(from);
         List<Quack> quacks = this.entityManager.createQuery(query).getResultList();
-        for (Quack quack : quacks) {
-            quack.setAuthor(null);
-        }
         return ResponseEntity.ok(quacks);
     }
 }
