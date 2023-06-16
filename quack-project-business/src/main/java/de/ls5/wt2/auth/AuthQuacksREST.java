@@ -46,27 +46,31 @@ public class AuthQuacksREST {
     /*
      *    gibt alle Quacks des Users zurück, wenn der User angemeldet ist
      */
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Quack>> readAllUsersQuacks(){
+    @GetMapping(path = "{userId}",
+                produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Quack>> readAllUsersQuacks(@PathVariable final long userId){
         final Subject subject = SecurityUtils.getSubject();
         final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                 .setParameter("username", subject.getPrincipals().toString())
                 .getSingleResult();
-        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.author = :author", Quack.class)
-                .setParameter("author", author)
-                .getResultList();
-        if( quacks.isEmpty()){
-            return ResponseEntity.ok(quacks);
+        if(author != null && author.getId() == userId){
+            final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName = :userName", Quack.class)
+                    .setParameter("userName", author.getUsername())
+                    .getResultList();
+            if( !quacks.isEmpty()){
+                return ResponseEntity.ok(quacks);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     /*
      *    gibt einen Quack zurück, wenn der User angemeldet ist und der Author des Quacks oder Admin ist
      */
-    @GetMapping(path = "{quackId}",
+    @GetMapping(path = "{userId}/{quackId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Quack> readQuackById(@PathVariable final long quackId){
+    public ResponseEntity<Quack> readQuackById(@PathVariable long userId, @PathVariable final long quackId){
         final Quack quack = entityManager.find(Quack.class, quackId);
         if(quack != null){
             final Subject subject = SecurityUtils.getSubject();
@@ -74,7 +78,7 @@ public class AuthQuacksREST {
                     .setParameter("username", subject.getPrincipals().toString())
                     .getSingleResult();
             // überprüfen ob User der Author des Quacks oder Admin ist
-            if(quack.getAuthor().equals(author) || subject.hasRole("admin")){
+            if( (quack.getAuthor().equals(author) && userId == author.getId()) || subject.hasRole("admin")){
                 quack.setAuthor(null);
                 return ResponseEntity.ok(quack);
             }
