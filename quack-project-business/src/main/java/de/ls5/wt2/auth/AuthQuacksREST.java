@@ -46,21 +46,17 @@ public class AuthQuacksREST {
     /*
      *    gibt alle Quacks des Users zurück, wenn der User angemeldet ist
      */
-    @GetMapping(path = "{userId}",
-                produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Quack>> readAllUsersQuacks(@PathVariable final long userId){
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Quack>> readAllUsersQuacks(){
         final Subject subject = SecurityUtils.getSubject();
         final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                 .setParameter("username", subject.getPrincipals().toString())
                 .getSingleResult();
-        if(author != null && author.getId() == userId){
-            final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName = :userName", Quack.class)
-                    .setParameter("userName", author.getUsername())
-                    .getResultList();
-            if( !quacks.isEmpty()){
-                return ResponseEntity.ok(quacks);
-            }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName = :userName", Quack.class)
+                .setParameter("userName", author.getUsername())
+                .getResultList();
+        if( !quacks.isEmpty()){
+            return ResponseEntity.ok(quacks);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }

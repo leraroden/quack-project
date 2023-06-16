@@ -12,6 +12,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { EnvironmentBadgeComponent } from './shared/environment-badge/environment-badge.component';
 import { QuackListComponent } from './angular/quack-list/quack-list.component';
 import {CreateQuackAuthComponent} from "./auth/create-quack-auth/create-quack-auth.component";
+import { AuthQuackService } from './auth/auth-quack.service';
+import { UserQuackComponent } from './auth/user-quack/user-quack.component'
 
 @NgModule({
     declarations: [
@@ -21,7 +23,8 @@ import {CreateQuackAuthComponent} from "./auth/create-quack-auth/create-quack-au
         CreateQuackAuthComponent,
         LoginComponent,
         QuackListComponent,
-        EnvironmentBadgeComponent
+        EnvironmentBadgeComponent,
+        UserQuackComponent
     ],
     imports: [
         BrowserModule,
@@ -30,7 +33,7 @@ import {CreateQuackAuthComponent} from "./auth/create-quack-auth/create-quack-au
         FormsModule,
         HttpClientModule
     ],
-    providers: [],
+    providers: [AuthQuackService],
     exports: [
     ],
     bootstrap: [AppComponent]
