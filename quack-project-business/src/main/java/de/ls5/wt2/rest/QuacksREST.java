@@ -18,7 +18,7 @@ import java.util.List;
 
 @Transactional
 @RestController
-@RequestMapping(path = "rest/quacks")
+@RequestMapping(path = "rest/quacks/all")
 public class QuacksREST {
 
     @Autowired
@@ -27,13 +27,27 @@ public class QuacksREST {
     /*
      *    gibt alle Quacks zurück
      */
-    @GetMapping(path = "all",
-                produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Quack>> readAllQuacks(){
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         final CriteriaQuery<Quack> query = builder.createQuery(Quack.class);
         final Root<Quack> from = query.from(Quack.class);
         query.select(from);
+        List<Quack> quacks = this.entityManager.createQuery(query).getResultList();
+        return ResponseEntity.ok(quacks);
+    }
+
+    /*
+     *  gibt alle Quacks in der chronologischen Reihenfolge zurück
+     */
+    @GetMapping(path = "sortedByDate",
+                produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Quack>> readAllQuacksSortedByDate(){
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Quack> query = builder.createQuery(Quack.class);
+        final Root<Quack> from = query.from(Quack.class);
+        query.select(from);
+        query.orderBy(builder.desc(from.get("publishedOn")));
         List<Quack> quacks = this.entityManager.createQuery(query).getResultList();
         return ResponseEntity.ok(quacks);
     }

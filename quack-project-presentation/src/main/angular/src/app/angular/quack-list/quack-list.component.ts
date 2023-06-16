@@ -8,7 +8,6 @@ import { QuackService } from '../quack.service';
   styleUrls: ['./quack-list.component.sass']
 })
 export class QuackListComponent implements OnInit{
-  //quacks?: Quack[];
 
   @Input()
   public quacks: Quack[] = [];
@@ -20,9 +19,8 @@ export class QuackListComponent implements OnInit{
   }
 
   private getQuacks() {
-    this.quackService.getAllQuacks().subscribe( data => {
+    this.quackService.getAllQuacksSortedByDate().subscribe( data => {
       this.quacks = data;
-      console.log(this.quacks);
       });
   }
 }

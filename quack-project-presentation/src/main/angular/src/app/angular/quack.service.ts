@@ -16,4 +16,8 @@ export class QuackService {
     return this.http.get<Quack[]>(`${environment.apiUrl}/quacks/all`);
   }
 
+  getAllQuacksSortedByDate(): Observable<Quack[]> {
+    return this.http.get<Quack[]>(`${environment.apiUrl}/quacks/all/sortedByDate`);
+  }
+
 }
