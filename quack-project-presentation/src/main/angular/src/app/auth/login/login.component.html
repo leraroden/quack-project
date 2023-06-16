@@ -16,11 +16,14 @@
     <label class="form-label">Password</label>
     <input name="password" type="password" class="form-control" [(ngModel)]="password" required placeholder="Enter your password">
   </div>
-  <div class="col-3">
-    <button class="btn w-100 btn-outline-primary" [disabled]="!canLogin" (click)="login($event)">Login</button>
-  </div>
-  <hr>
-  <div class="col-3">
-    <button class="btn w-100 btn-outline-primary" [disabled]="!canRegister" (click)="register($event)">Register</button>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <button class="btn w-100 btn-outline-primary" [disabled]="!canLogin" (click)="login($event)">Login</button>
+      </div>
+      <div class="col">
+        <button class="btn w-100 btn-outline-primary" [disabled]="!canRegister" (click)="register($event)">Register</button>
+      </div>
+    </div>
   </div>
 </form>

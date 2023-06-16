@@ -26,5 +26,9 @@ export class AuthQuackService extends QuackService{
     );
   }
 
+  getQuacksFromUser(): Observable<Quack[]> {
+    return this.http.get<any>(`${this.authService.getBaseUrl()}/quacks`, {headers: this.authService.getAuthHeaders()});
+  }
+
 
 }
