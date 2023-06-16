@@ -27,9 +27,9 @@
       <wt2-create-quack-auth (created)="load()"></wt2-create-quack-auth>
     </div>
     <div class="col-8">
-      <h4 class="title">Quacks</h4>
+      <h4 class="title">All Quacks</h4>
       <hr>
-      <wt2-quack-list></wt2-quack-list>
+      <wt2-quack-list [quacks]="quacks"></wt2-quack-list>
       <hr>
     </div>
   </div>

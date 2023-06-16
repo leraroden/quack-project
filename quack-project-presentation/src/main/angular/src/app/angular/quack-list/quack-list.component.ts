@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Quack } from '../../quack'
 import { QuackService } from '../quack.service';
 
@@ -8,7 +8,10 @@ import { QuackService } from '../quack.service';
   styleUrls: ['./quack-list.component.sass']
 })
 export class QuackListComponent implements OnInit{
-  quacks?: Quack[];
+  //quacks?: Quack[];
+
+  @Input()
+  public quacks: Quack[] = [];
 
   constructor(private quackService: QuackService) {}
 

@@ -30,7 +30,9 @@ export class LoginComponent {
         (error) => {
           if (error.status === 409) {
             this.errorMessage = "Username already exists";
-          } else {
+          } else if(error.status === 504){
+            this.errorMessage = "Server not reachable";
+          }else{
             this.errorMessage = "Failed to register";
           }
         }
