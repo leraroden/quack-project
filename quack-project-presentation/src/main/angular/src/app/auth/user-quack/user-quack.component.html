@@ -1,11 +1,11 @@
 <div *ngIf="userQuacks; then showQuacks else noQuacks"></div>
 <ng-template #showQuacks>
   <div class="alert alert-info" *ngFor="let quack of userQuacks">
-    <div class="d-flex justify-content-between">
-      <p>{{ quack.publishedOn | date}}</p>
-      <span class="text-muted" style="font-style: italic">{{quack.authorName}}</span>
+    <span class="text-muted" style="font-style: italic">{{quack.authorName}}</span>
+    <p>{{ quack.publishedOn | date}}</p>
+    <div class="block">
+      <wt2-edit-user-quack [editQuack]="quack"></wt2-edit-user-quack>
     </div>
-    {{ quack.content }}
   </div>
 </ng-template>
 <ng-template #noQuacks>

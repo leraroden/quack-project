@@ -17,8 +17,6 @@ export class UserQuackComponent implements OnInit {
       this.getQuacksFromUser();
    }
 
-
-
    private getQuacksFromUser() {
        this.authQuackService.getQuacksFromUser().subscribe( data => {
          this.userQuacks = data;

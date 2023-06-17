@@ -1,4 +1,5 @@
 export class Quack {
+  id: number;
   content: string;
   publishedOn: Date;
   authorName: String;
