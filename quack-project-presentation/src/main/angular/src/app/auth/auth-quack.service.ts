@@ -31,7 +31,11 @@ export class AuthQuackService extends QuackService{
   }
 
   save(id: number, quack: Quack): Observable<Quack> {
-    return this.http.put<Quack>(`${this.authService.getBaseUrl()}/quacks/${id}`, {quack}, {headers: this.authService.getAuthHeaders()});
+    return this.http.put<Quack>(`${this.authService.getBaseUrl()}/quacks/${id}`, quack, {headers: this.authService.getAuthHeaders()});
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.authService.getBaseUrl()}/quacks/${id}`, {headers: this.authService.getAuthHeaders()});
   }
 
 

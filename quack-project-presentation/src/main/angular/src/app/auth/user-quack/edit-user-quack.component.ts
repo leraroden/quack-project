@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Quack } from '../../quack'
 import {AuthQuackService} from "../../auth/auth-quack.service";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'wt2-edit-user-quack',
@@ -9,11 +10,15 @@ import {AuthQuackService} from "../../auth/auth-quack.service";
 })
 export class EditQuackComponent {
    @Input() editQuack: Quack;
+   @Output() dataChanged: EventEmitter<void> = new EventEmitter<void>();
 
    editmode: boolean = false;
    editContent: string = '';
 
-   constructor(private authQuackService: AuthQuackService) {}
+   constructor(
+     private authQuackService: AuthQuackService,
+     private route: ActivatedRoute,
+     private router: Router) {}
 
    edit(quack: Quack) {
       this.editmode = true;
@@ -23,7 +28,19 @@ export class EditQuackComponent {
    save(quack: Quack) {
       this.editmode = false;
       quack.content = this.editContent;
-      this.authQuackService.save(quack.id, quack);
-      console.log(quack);
+      this.authQuackService.save(quack.id, quack).subscribe(() => {
+        console.log(quack);
+        this.dataChanged.emit();
+      });
+   }
+
+   delete(quack: Quack) {
+      this.editmode = false;
+      this.editContent = '';
+      this.authQuackService.delete(quack.id).subscribe( data => {
+        console.log(data);
+        this.dataChanged.emit();
+      });
+      this.router.navigate(['/auth']);
    }
 }

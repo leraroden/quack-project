@@ -89,7 +89,7 @@ public class AuthQuacksREST {
     @PutMapping(path = "{quackId}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateQuackById(@PathVariable final long quackId,
+    public ResponseEntity<?> updateQuackById(@PathVariable final long quackId,
                                          @RequestBody final Quack param){
         final Subject subject = SecurityUtils.getSubject();
         final Quack quack = entityManager.find(Quack.class, quackId);
@@ -103,9 +103,9 @@ public class AuthQuacksREST {
                 if(content != null){
                     quack.setContent(content);
                     entityManager.flush();
-                    return ResponseEntity.ok("Quack was updated");
+                    return ResponseEntity.ok(quack);
                 }
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return ResponseEntity.badRequest().build();
             }
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("You are not authorized to update this Quack");
@@ -119,7 +119,7 @@ public class AuthQuacksREST {
      */
     @DeleteMapping(path = "{quackId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteQuackById(@PathVariable final long quackId){
+    public ResponseEntity<?> deleteQuackById(@PathVariable final long quackId){
         final Subject subject = SecurityUtils.getSubject();
         final Quack quack = this.entityManager.find(Quack.class, quackId);
         if (quack != null) {
@@ -129,7 +129,7 @@ public class AuthQuacksREST {
             // überprüfen ob User der Author des Quacks oder Admin ist
             if(quack.getAuthor().equals(user) || subject.hasRole("admin")){
                 entityManager.remove(quack);
-                return ResponseEntity.ok("Quack was deleted");
+                return ResponseEntity.noContent().build();
             }
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("You are not authorized to delete this Quack");

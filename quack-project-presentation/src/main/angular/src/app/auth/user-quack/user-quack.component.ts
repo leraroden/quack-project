@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Quack } from '../../quack'
 import {AuthQuackService} from "../../auth/auth-quack.service";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'wt2-user-quack',
@@ -11,13 +12,16 @@ export class UserQuackComponent implements OnInit {
 
    userQuacks?: Quack[];
 
-   constructor(private authQuackService: AuthQuackService) {}
+   constructor(
+       private authQuackService: AuthQuackService,
+       private route: ActivatedRoute,
+       private router: Router) {}
 
    ngOnInit(): void {
       this.getQuacksFromUser();
    }
 
-   private getQuacksFromUser() {
+   getQuacksFromUser() {
        this.authQuackService.getQuacksFromUser().subscribe( data => {
          this.userQuacks = data;
          console.log(this.userQuacks);

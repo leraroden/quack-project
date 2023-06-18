@@ -7,5 +7,5 @@
 
 <div *ngIf="editmode" class="d-flex justify-content-around mt-5">
   <button (click)="save(editQuack)" class="btn w-100 btn-outline-success mt-4">save</button>
-  <button class="btn w-100 btn-outline-danger mt-4">delete</button>
+  <button (click)="delete(editQuack)" class="btn w-100 btn-outline-danger mt-4">delete</button>
 </div>

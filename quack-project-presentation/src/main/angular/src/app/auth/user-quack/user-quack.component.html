@@ -4,7 +4,7 @@
     <span class="text-muted" style="font-style: italic">{{quack.authorName}}</span>
     <p>{{ quack.publishedOn | date}}</p>
     <div class="block">
-      <wt2-edit-user-quack [editQuack]="quack"></wt2-edit-user-quack>
+      <wt2-edit-user-quack [editQuack]="quack" (dataChanged)="getQuacksFromUser()"></wt2-edit-user-quack>
     </div>
   </div>
 </ng-template>
