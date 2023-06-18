@@ -24,13 +24,13 @@
     <div class="row">
       <h4 class="title">Create Quack</h4>
       <hr>
-      <wt2-create-quack-auth (created)="load()"></wt2-create-quack-auth>
+      <wt2-create-quack-auth (created)="handleQuackCreated()"></wt2-create-quack-auth>
     </div>
   </div>
   <div class="row mt-3">
     <h4 class="title">My Quacks</h4>
     <hr>
-    <wt2-user-quack></wt2-user-quack>
+    <wt2-user-quack [userQuacks]="userQuacks"></wt2-user-quack>
     <hr>
   </div>
 </div>

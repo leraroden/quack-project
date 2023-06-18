@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Quack } from './../quack'
 import { HttpClient } from '@angular/common/http';
 import { AngularComponent } from '../angular/angular.component';
 import { BasicAuthService } from './basic-auth.service';
@@ -17,6 +18,7 @@ export class AuthComponent extends AngularComponent implements OnInit {
   private static readonly AUTH_METHOD_PARAM_NAME = 'method';
 
   authService: AuthService;
+  userQuacks?: Quack[];
 
   constructor(private http: HttpClient,
               private authQuackService: AuthQuackService,
@@ -62,4 +64,18 @@ export class AuthComponent extends AngularComponent implements OnInit {
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
   }
+
+  override load() {
+    // Lade die Quacks, wenn der Benutzer angemeldet ist
+    if (this.isLoggedIn) {
+      this.authQuackService.getQuacksFromUser().subscribe(quacks => {
+        this.userQuacks = quacks;
+      });
+    }
+  }
+
+  handleQuackCreated() {
+    this.load();
+  }
+
 }
