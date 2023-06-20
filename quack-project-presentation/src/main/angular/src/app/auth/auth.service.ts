@@ -17,4 +17,10 @@ export abstract class AuthService {
   abstract getBaseUrl(): string;
 
   abstract get isLoggedIn(): boolean;
+
+  abstract getToken(): string | undefined;
+
+  abstract setToken(token: string): void;
+
+  abstract removeToken(): void;
 }

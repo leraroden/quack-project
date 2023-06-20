@@ -31,11 +31,16 @@ export class BasicAuthService extends AuthService {
     return this.http.head(`${this.getBaseUrl()}/profile`, {headers: this.getAuthHeadersForToken(encodedToken), responseType: 'text'})
         .pipe(map(body => {
           this.token = encodedToken;
-          return true;
+          if(this.token){
+            this.setToken(this.token);
+            return true;
+          }
+          return false;
         }));
   }
 
   override logout(): Observable<boolean> {
+    localStorage.removeItem('token');
     this.token = null;
     return of(true);
   }
@@ -49,7 +54,19 @@ export class BasicAuthService extends AuthService {
   }
 
   override get isLoggedIn(): boolean {
-    return this.token != null;
+    return !!(this.getToken());
+  }
+
+  getToken(): string | undefined{
+    return localStorage.getItem('token') ?? undefined;
+  }
+
+  setToken(token: string): void {
+    return localStorage.setItem('token', token);
+  }
+
+  removeToken(): void {
+    return localStorage.removeItem('token');
   }
 
   getAuthHeadersForToken(token: string): HttpHeaders {
