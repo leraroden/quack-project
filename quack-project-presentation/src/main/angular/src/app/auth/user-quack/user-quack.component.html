@@ -1,0 +1,13 @@
+<div *ngIf="userQuacks; then showQuacks else noQuacks"></div>
+<ng-template #showQuacks>
+  <div class="alert alert-info" *ngFor="let quack of userQuacks">
+    <span class="text-muted" style="font-style: italic">{{quack.authorName}}</span>
+    <p>{{ quack.publishedOn | date}}</p>
+    <div class="block">
+      <wt2-edit-user-quack [editQuack]="quack" (dataChanged)="getQuacksFromUser()"></wt2-edit-user-quack>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noQuacks>
+  <div class="alert alert-info">No Quacks available.</div>
+</ng-template>

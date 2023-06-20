@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import {Observable, of,} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
@@ -9,10 +9,20 @@ import { environment as env } from '../../environments/environment';
 export class BasicAuthService extends AuthService {
 
   private token: string;
+  public errorMessage: string | null = null;
 
   constructor(protected override http: HttpClient) {
     super(http)
   }
+
+  // TODO: vervollständige die Methode
+  register(username: string, password: string): Observable<boolean> {
+    return this.http.post(`${env.apiUrl}/users`, {'username' : username, "password" : password}, {observe: 'response'})
+      .pipe(map(response => {
+        return response.status === 200;
+      }));
+  }
+
 
   override login(username: string, password: string): Observable<boolean> {
     const token = decodeURIComponent(encodeURIComponent(username + ':' + password));

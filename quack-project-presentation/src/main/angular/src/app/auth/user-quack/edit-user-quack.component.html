@@ -1,0 +1,11 @@
+<span *ngIf="!editmode">{{ editQuack.content }}</span>
+<textarea class="form-control" [(ngModel)]="editContent" *ngIf="editmode" type="text"></textarea>
+
+<div *ngIf="!editmode" class="d-flex justify-content-around mt-2">
+  <button (click)="edit(editQuack)" class="text-muted btn w-100 btn-outline-primary">edit</button>
+</div>
+
+<div *ngIf="editmode" class="d-flex justify-content-around mt-5">
+  <button (click)="save(editQuack)" class="btn w-100 btn-outline-success mt-4">save</button>
+  <button (click)="delete(editQuack)" class="btn w-100 btn-outline-danger mt-4">delete</button>
+</div>

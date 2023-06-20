@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Transactional
 @RestController
 @RequestMapping(path = {"rest/auth/basic/profile"})
-public class UserREST {
+public class AuthUserREST {
 
     /*
      *    gibt den Namen des angemeldeten Users zurück

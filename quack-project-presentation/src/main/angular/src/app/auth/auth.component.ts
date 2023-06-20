@@ -1,75 +1,52 @@
 import { Component, OnInit } from '@angular/core';
+import { Quack } from './../quack'
 import { HttpClient } from '@angular/common/http';
-import { AuthNewsService } from './auth-news.service';
 import { AngularComponent } from '../angular/angular.component';
 import { BasicAuthService } from './basic-auth.service';
 import { AuthService } from './auth.service';
-import { SessionAuthService } from './session-auth.service';
-import {ActivatedRoute, Params, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {AuthQuackService} from "./auth-quack.service";
 
 @Component({
   selector: 'wt2-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.sass'],
-  providers: [AuthNewsService]
+  providers: [AuthQuackService]
 })
 export class AuthComponent extends AngularComponent implements OnInit {
 
   private static readonly AUTH_METHOD_PARAM_NAME = 'method';
 
   authService: AuthService;
+  userQuacks?: Quack[];
 
   constructor(private http: HttpClient,
-              private authNewsService: AuthNewsService,
+              private authQuackService: AuthQuackService,
               private router: Router,
               private route: ActivatedRoute) {
-    super(authNewsService);
+    super(authQuackService);
+    this.authService = new BasicAuthService(http);
+    this.authQuackService.setAuthService(this.authService);
   }
 
   override ngOnInit() {
     this.route.queryParamMap.subscribe({
-      next: queryParams => {
-        if (queryParams.has(AuthComponent.AUTH_METHOD_PARAM_NAME)) {
-          switch (queryParams.get(AuthComponent.AUTH_METHOD_PARAM_NAME)) {
-            case 'session':
-              this.useSessionAuth();
-              break;
-            default:
-              this.useBasicAuth();
-          }
-        } else {
-          this.useBasicAuth();
-        }
+      next: () => {
+        this.useBasicAuth();
       }
     });
   }
 
   logout() {
     this.authService.logout().subscribe();
-    this.news = [];
-    this.latest = null;
+    this.quacks = [];
   }
 
   useBasicAuth(e?: Event) {
     if (e != null) e.preventDefault();
     this.authService = new BasicAuthService(this.http);
-    this.authNewsService.authService = this.authService;
+    this.authQuackService.setAuthService(this.authService);
     this.reloadQueryParameters('basic');
-  }
-
-  useSessionAuth(e?: Event) {
-    if (e != null) e.preventDefault();
-    this.authService = new SessionAuthService(this.http);
-    this.authNewsService.authService = this.authService;
-    this.reloadQueryParameters('session');
-  }
-
-  isBasicAuth(): boolean {
-    return this.authService instanceof BasicAuthService;
-  }
-
-  isSessionAuth(): boolean {
-    return this.authService instanceof SessionAuthService;
   }
 
   private reloadQueryParameters(method: string): void {
@@ -87,4 +64,18 @@ export class AuthComponent extends AngularComponent implements OnInit {
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
   }
+
+  override load() {
+    // Lade die Quacks, wenn der Benutzer angemeldet ist
+    if (this.isLoggedIn) {
+      this.authQuackService.getQuacksFromUser().subscribe(quacks => {
+        this.userQuacks = quacks;
+      });
+    }
+  }
+
+  handleQuackCreated() {
+    this.load();
+  }
+
 }
