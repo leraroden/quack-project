@@ -19,7 +19,12 @@ export class BasicAuthService extends AuthService {
   register(username: string, password: string): Observable<boolean> {
     return this.http.post(`${env.apiUrl}/users`, {'username' : username, "password" : password}, {observe: 'response'})
       .pipe(map(response => {
-        return response.status === 200;
+        if(response.status == 200){
+          return true;
+        }
+        else {
+          return false;
+        }
       }));
   }
 
@@ -46,6 +51,7 @@ export class BasicAuthService extends AuthService {
   }
 
   override getAuthHeaders(): HttpHeaders {
+    this.token = this.getToken();
     return this.getAuthHeadersForToken(this.token);
   }
 
