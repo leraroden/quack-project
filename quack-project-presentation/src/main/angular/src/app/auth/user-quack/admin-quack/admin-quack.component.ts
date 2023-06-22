@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Quack } from '../../quack'
-import {AuthQuackService} from "../../auth/auth-quack.service";
-import {QuackService} from "../../angular/quack.service";
+import { Quack } from '../../../quack'
+import {AuthQuackService} from "../../../auth/auth-quack.service";
+import {QuackService} from "../../../angular/quack.service";
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
