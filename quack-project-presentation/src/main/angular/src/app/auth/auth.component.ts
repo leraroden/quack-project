@@ -90,7 +90,6 @@ export class AuthComponent extends AngularComponent implements OnInit {
        this.authQuackService.getAllQuacks().subscribe( quacks => {
           this.adminQuacks = quacks;
         });
-       console.log("Admin quacks: " + this.adminQuacks);
     }
   }
 

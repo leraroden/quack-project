@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Quack } from '../../quack'
+import { Quack } from '../../quack';
 import {AuthQuackService} from "../../auth/auth-quack.service";
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -24,7 +24,6 @@ export class UserQuackComponent implements OnInit {
    getQuacksFromUser() {
        this.authQuackService.getQuacksFromUser().subscribe( data => {
          this.userQuacks = data;
-         console.log(this.userQuacks);
        });
    }
 

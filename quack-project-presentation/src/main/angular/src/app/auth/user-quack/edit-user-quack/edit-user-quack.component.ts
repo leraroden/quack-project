@@ -29,7 +29,6 @@ export class EditQuackComponent {
       this.editmode = false;
       quack.content = this.editContent;
       this.authQuackService.save(quack.id, quack).subscribe(() => {
-        console.log(quack);
         this.dataChanged.emit();
       });
    }
@@ -38,7 +37,6 @@ export class EditQuackComponent {
       this.editmode = false;
       this.editContent = '';
       this.authQuackService.delete(quack.id).subscribe( data => {
-        console.log(data);
         this.dataChanged.emit();
       });
       this.router.navigate(['/auth']);

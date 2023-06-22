@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Quack } from '../../../quack'
-import {AuthQuackService} from "../../../auth/auth-quack.service";
-import {QuackService} from "../../../angular/quack.service";
+import { Quack } from '../../quack';
+import {AuthQuackService} from "../../auth/auth-quack.service";
+import {QuackService} from "../../angular/quack.service";
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'wt2-admin-quack',
-  templateUrl: './admin-quack.component.html'
+  templateUrl: './admin-quack.component.html',
+  styleUrls: ['./admin-quack.component.sass']
 })
 export class AdminQuackComponent implements OnInit {
 
@@ -23,10 +24,9 @@ export class AdminQuackComponent implements OnInit {
    }
 
    getQuacksFromAdmin() {
-      /* this.quackService.getAllQuacks().subscribe( quacks => {
+      this.authQuackService.getAllQuacks().subscribe( quacks => {
         this.adminQuacks = quacks;
-      }); */
-     console.log("Admin component quacks: " + this.adminQuacks);
+      });
    }
 
 }
