@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Quack } from '../../quack'
-import {AuthQuackService} from "../../auth/auth-quack.service";
+import {AuthQuackService} from "../auth-quack.service";
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

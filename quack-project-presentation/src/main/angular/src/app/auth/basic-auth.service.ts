@@ -9,13 +9,11 @@ import { environment as env } from '../../environments/environment';
 export class BasicAuthService extends AuthService {
 
   private token: string;
-  public errorMessage: string | null = null;
 
   constructor(protected override http: HttpClient) {
     super(http)
   }
 
-  // TODO: vervollständige die Methode
   register(username: string, password: string): Observable<boolean> {
     return this.http.post(`${env.apiUrl}/users`, {'username' : username, "password" : password}, {observe: 'response'})
       .pipe(map(response => {
@@ -37,11 +35,8 @@ export class BasicAuthService extends AuthService {
         .pipe(map(body => {
           this.setUsername(username);
           this.token = encodedToken;
-          if(this.token){
-            this.setToken(this.token);
-            return true;
-          }
-          return false;
+          this.setToken(this.token);
+          return true;
         }));
   }
 
@@ -78,10 +73,6 @@ export class BasicAuthService extends AuthService {
 
   setToken(token: string): void {
     return localStorage.setItem('token', token);
-  }
-
-  removeToken(): void {
-    return localStorage.removeItem('token');
   }
 
   getAuthHeadersForToken(token: string): HttpHeaders {

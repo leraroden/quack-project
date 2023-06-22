@@ -38,21 +38,12 @@ public class ShiroConfig {
         Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
 
         filters.put("restAuthenticator", new BasicAuthenticationFilterWithoutRedirect());
-        //filters.put("loginFilter", new FormAuthenticationFilterWithoutRedirect());
-        //filters.put("logoutFilter", new LogoutFilterWithoutRedirect());
 
 
         final Map<String, String> chainDefinition = new LinkedHashMap<>();
 
         // configuration for stateless authentication on each request
         chainDefinition.put("/rest/auth/basic/**", "noSessionCreation, restAuthenticator");
-
-        // configuration for using session based authentication
-        //chainDefinition.put("/login.jsp", "loginFilter");
-        //chainDefinition.put("/logout", "logoutFilter");
-
-        // configuration for stateless authentication on each request
-        //chainDefinition.put("/rest/auth/**", "restAuthenticator");
 
         // make other examples not require authentication
         chainDefinition.put("/rest/**", "anon");

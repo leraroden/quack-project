@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Quack } from './../quack'
+import { Quack } from '../quack'
 import { HttpClient } from '@angular/common/http';
 import { AngularComponent } from '../angular/angular.component';
 import { BasicAuthService } from './basic-auth.service';
