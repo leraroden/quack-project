@@ -8,12 +8,6 @@ export const environment = {
   apiUrl: '/rest'
 };
 
-/*
-User user = new User(1, "Alex");
-News news = new News(2, "Webtech is nice");
-user.news.add(news)
-news.user = user
-*/
 
 /*
  * For easier debugging in development mode, you can import the following file

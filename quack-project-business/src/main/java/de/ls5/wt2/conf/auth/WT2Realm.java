@@ -1,14 +1,11 @@
 package de.ls5.wt2.conf.auth;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import de.ls5.wt2.conf.auth.permission.EditQuackPermission;
-import de.ls5.wt2.conf.auth.permission.ReadNewsItemPermission;
 import de.ls5.wt2.entity.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -68,12 +65,7 @@ public class WT2Realm extends AuthorizingRealm implements Realm {
             }
 
             @Override
-            public Collection<Permission> getObjectPermissions() {
-                if (getRoles().equals(Collections.singleton("admin"))) {
-                    return Arrays.asList(new ReadNewsItemPermission(), new EditQuackPermission());
-                }
-                return Collections.singleton(new ReadNewsItemPermission());
-            }
+            public Collection<Permission> getObjectPermissions() { return Collections.emptyList();}
         };
     }
 }

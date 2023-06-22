@@ -52,11 +52,14 @@ public class AuthQuacksREST {
         final User author = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                 .setParameter("username", subject.getPrincipals().toString())
                 .getSingleResult();
-        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName = :userName", Quack.class)
-                .setParameter("userName", author.getUsername())
-                .getResultList();
-        if( !quacks.isEmpty()){
-            return ResponseEntity.ok(quacks);
+        if(author != null){
+            final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName = :userName", Quack.class)
+                    .setParameter("userName", author.getUsername())
+                    .getResultList();
+            if( !quacks.isEmpty()){
+                return ResponseEntity.ok(quacks);
+            }
+            return ResponseEntity.noContent().build();
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
@@ -80,7 +83,7 @@ public class AuthQuacksREST {
             }
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.noContent().build();
     }
 
     /*
