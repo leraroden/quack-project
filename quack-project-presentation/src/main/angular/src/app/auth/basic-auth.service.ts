@@ -35,6 +35,7 @@ export class BasicAuthService extends AuthService {
 
     return this.http.head(`${this.getBaseUrl()}/profile`, {headers: this.getAuthHeadersForToken(encodedToken), responseType: 'text'})
         .pipe(map(body => {
+          this.setUsername(username);
           this.token = encodedToken;
           if(this.token){
             this.setToken(this.token);
@@ -42,6 +43,14 @@ export class BasicAuthService extends AuthService {
           }
           return false;
         }));
+  }
+
+  setUsername(username: string) {
+    return localStorage.setItem('username', username);
+  }
+
+  getUsername(): string | null {
+    return localStorage.getItem('username');
   }
 
   override logout(): Observable<boolean> {

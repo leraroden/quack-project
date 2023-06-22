@@ -19,6 +19,7 @@ export class AuthComponent extends AngularComponent implements OnInit {
 
   authService: AuthService;
   userQuacks?: Quack[];
+  username: string = '';
 
   constructor(private http: HttpClient,
               private authQuackService: AuthQuackService,
@@ -40,6 +41,7 @@ export class AuthComponent extends AngularComponent implements OnInit {
   logout() {
     this.authService.logout().subscribe();
     this.quacks = [];
+    this.username = '';
   }
 
   useBasicAuth(e?: Event) {
@@ -62,6 +64,7 @@ export class AuthComponent extends AngularComponent implements OnInit {
   }
 
   get isLoggedIn(): boolean {
+    this.username = this.authService.getUsername();
     return this.authService.isLoggedIn;
   }
 

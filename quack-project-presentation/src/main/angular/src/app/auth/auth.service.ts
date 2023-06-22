@@ -23,4 +23,8 @@ export abstract class AuthService {
   abstract setToken(token: string): void;
 
   abstract removeToken(): void;
+
+  abstract getUsername(): string | null;
+
+  abstract setUsername(username: string): void;
 }
