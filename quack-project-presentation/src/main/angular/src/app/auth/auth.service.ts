@@ -25,4 +25,8 @@ export abstract class AuthService {
   abstract getUsername(): string | null;
 
   abstract setUsername(username: string): void;
+
+  abstract get isLoggedInAsAdmin(): boolean;
+
+  abstract get isLoggedInAsUser(): boolean;
 }

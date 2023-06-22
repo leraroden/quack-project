@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Quack } from '../../quack'
+import { Quack } from '../../quack';
 import {AuthQuackService} from "../auth-quack.service";
 
 @Component({
@@ -21,7 +21,6 @@ export class UserQuackComponent implements OnInit {
    getQuacksFromUser() {
        this.authQuackService.getQuacksFromUser().subscribe( data => {
          this.userQuacks = data;
-         console.log(this.userQuacks);
        });
    }
 
