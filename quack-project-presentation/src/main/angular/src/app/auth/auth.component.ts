@@ -6,12 +6,13 @@ import { BasicAuthService } from './basic-auth.service';
 import { AuthService } from './auth.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthQuackService} from "./auth-quack.service";
+import {QuackService} from "../angular/quack.service";
 
 @Component({
   selector: 'wt2-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.sass'],
-  providers: [AuthQuackService]
+  providers: [AuthQuackService, QuackService]
 })
 export class AuthComponent extends AngularComponent implements OnInit {
 
@@ -19,6 +20,7 @@ export class AuthComponent extends AngularComponent implements OnInit {
 
   authService: AuthService;
   userQuacks?: Quack[];
+  adminQuacks?: Quack[];
   username: string = '';
 
   constructor(private http: HttpClient,
@@ -63,6 +65,14 @@ export class AuthComponent extends AngularComponent implements OnInit {
       });
   }
 
+  get isLoggedInAsAdmin(): boolean {
+    return this.authService.isLoggedInAsAdmin;
+  }
+
+  get isLoggedInAsUser(): boolean {
+    return this.authService.isLoggedInAsUser;
+  }
+
   get isLoggedIn(): boolean {
     this.username = this.authService.getUsername();
     return this.authService.isLoggedIn;
@@ -70,10 +80,17 @@ export class AuthComponent extends AngularComponent implements OnInit {
 
   override load() {
     // Lade die Quacks, wenn der Benutzer angemeldet ist
-    if (this.isLoggedIn) {
+    if (this.isLoggedInAsUser) {
       this.authQuackService.getQuacksFromUser().subscribe(quacks => {
         this.userQuacks = quacks;
       });
+    }
+    // Lade die Quacks, wenn der admin angemeldet ist
+    if(this.isLoggedInAsAdmin){
+       this.authQuackService.getAllQuacks().subscribe( quacks => {
+          this.adminQuacks = quacks;
+        });
+       console.log("Admin quacks: " + this.adminQuacks);
     }
   }
 

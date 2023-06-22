@@ -15,6 +15,7 @@ import {CreateQuackAuthComponent} from "./auth/create-quack-auth/create-quack-au
 import { AuthQuackService } from './auth/auth-quack.service';
 import { UserQuackComponent } from './auth/user-quack/user-quack.component';
 import { EditQuackComponent } from './auth/user-quack/edit-user-quack.component';
+import { AdminQuackComponent } from './auth/user-quack/admin-quack.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { EditQuackComponent } from './auth/user-quack/edit-user-quack.component'
         QuackListComponent,
         EnvironmentBadgeComponent,
         UserQuackComponent,
-        EditQuackComponent
+        EditQuackComponent,
+        AdminQuackComponent
     ],
     imports: [
         BrowserModule,

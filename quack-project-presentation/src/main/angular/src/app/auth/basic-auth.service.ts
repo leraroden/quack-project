@@ -72,6 +72,14 @@ export class BasicAuthService extends AuthService {
     return !!(this.getToken());
   }
 
+  override get isLoggedInAsAdmin(): boolean {
+    return this.isLoggedIn && this.getUsername() === 'admin';
+  }
+
+  override get isLoggedInAsUser(): boolean {
+    return this.isLoggedIn && !(this.getUsername() === 'admin');
+  }
+
   getToken(): string | undefined{
     return localStorage.getItem('token') ?? undefined;
   }

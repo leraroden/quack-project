@@ -8,7 +8,34 @@
   </div>
 </div>
 
-<div *ngIf="isLoggedIn">
+<div *ngIf="isLoggedInAsAdmin">
+  <div class="row">
+    <div class="col-12 text-right">
+      <button class="btn btn-sm btn-outline-secondary" (click)="logout()">Logout</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <!-- Hier soll der Name noch dynamisch eingefügt werden kann -->
+    <p>Hi, {{username}} !</p>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="row">
+      <h4 class="title">Create Quack</h4>
+      <hr>
+      <wt2-create-quack-auth (created)="handleQuackCreated()"></wt2-create-quack-auth>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <h4 class="title">Alle Quacks</h4>
+    <hr>
+    <wt2-admin-quack [adminQuacks]="adminQuacks"></wt2-admin-quack>
+    <hr>
+  </div>
+</div>
+
+<div *ngIf="isLoggedInAsUser">
   <div class="row">
     <div class="col-12 text-right">
       <button class="btn btn-sm btn-outline-secondary" (click)="logout()">Logout</button>
