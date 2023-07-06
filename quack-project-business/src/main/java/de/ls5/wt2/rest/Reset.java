@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import java.util.Arrays;
 import java.util.List;
 
 @Transactional
@@ -23,16 +24,17 @@ public class Reset {
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> resetDatabase() {
 
-        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName <> :userName", Quack.class)
+        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName != :userName", Quack.class)
                 .setParameter("userName", "admin")
                 .getResultList();
         for (Quack quack : quacks) {
             entityManager.remove(quack);
         }
 
-        final List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.username <> :userName", User.class)
-                .setParameter("userName", "admin")
+        final List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.username NOT IN (:userNames)", User.class)
+                .setParameter("userNames", Arrays.asList("admin", "user"))
                 .getResultList();
+
 
         for (User user : users) {
             entityManager.remove(user);
