@@ -1,6 +1,6 @@
 <div *ngIf="quacks; then showQuacks else noQuacks"></div>
 <ng-template #showQuacks>
-  <div class="alert alert-info" *ngFor="let quack of quacks">
+  <div class="quack-item alert alert-info" *ngFor="let quack of quacks">
     <div class="d-flex justify-content-between">
       <p>{{ quack.publishedOn | date}}</p>
       <span class="text-muted" style="font-style: italic">{{quack.authorName}}</span>
