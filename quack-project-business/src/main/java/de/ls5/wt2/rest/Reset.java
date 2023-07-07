@@ -21,24 +21,29 @@ public class Reset {
     @Autowired
     private EntityManager entityManager;
 
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> resetDatabase() {
 
-        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q", Quack.class)
-                .getResultList();
-        for (Quack quack : quacks) {
-            entityManager.remove(quack);
+        try {
+            final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q", Quack.class)
+                    .getResultList();
+            for (Quack quack : quacks) {
+                entityManager.remove(quack);
+            }
+
+            final List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.username NOT IN (:userNames)", User.class)
+                    .setParameter("userNames", Arrays.asList("admin", "user"))
+                    .getResultList();
+
+
+            for (User user : users) {
+                entityManager.remove(user);
+            }
+
+            return new ResponseEntity(HttpStatus.OK);
         }
-
-        final List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.username NOT IN (:userNames)", User.class)
-                .setParameter("userNames", Arrays.asList("admin", "user"))
-                .getResultList();
-
-
-        for (User user : users) {
-            entityManager.remove(user);
+        catch (Exception e){
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
