@@ -24,8 +24,7 @@ public class Reset {
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> resetDatabase() {
 
-        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q WHERE q.authorName != :userName", Quack.class)
-                .setParameter("userName", "admin")
+        final List<Quack> quacks = entityManager.createQuery("SELECT q FROM Quack q", Quack.class)
                 .getResultList();
         for (Quack quack : quacks) {
             entityManager.remove(quack);
